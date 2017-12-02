@@ -9,5 +9,7 @@ public class ClientController {
     /** this reference is to the text field the user writes their username into*/
     @FXML
     private TextField userIDField;
+    @FXML
+    private final User
 
 }

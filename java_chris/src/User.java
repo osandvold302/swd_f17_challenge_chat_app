@@ -29,6 +29,8 @@ public class User {
         try{
             client = new Socket(InetAddress.getByName("127.0.0.1"), 23555);
             output = new ObjectOutputStream(client.getOutputStream());
+            output.writeObject(ID);
+            output.flush();
             input = new ObjectInputStream(client.getInputStream());
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
@@ -103,7 +105,6 @@ public class User {
         requestMessageHistory(channel);
     }
 
-
     public String receiveMessage(){
         try {
             //Get information from the server and find out what group and user it is from
@@ -122,11 +123,12 @@ public class User {
 
             if(user.equals("REQUEST"))
             {
-                return wholeMessage.toString();
+                return "REQUEST:"+wholeMessage.toString();
             }
 
             if(!channelExists(channel)){
-                addChannel(channel);
+                channels.add(channel);
+                return "NewChannel:"+channel;
             }
 
             //If this channel is the one the user is currently looking at, spit out the message
@@ -143,6 +145,8 @@ public class User {
 
     public void close(){
         try {
+            output.writeObject("TERMINATE");
+            output.flush();
             output.close();
             input.close();
             client.close();
@@ -150,6 +154,5 @@ public class User {
             ioException.printStackTrace();
         }
     }
-
 
 }
