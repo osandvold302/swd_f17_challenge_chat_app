@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,7 +24,7 @@ public class User {
     /** this is the user's unique ID*/
     private final String ID;
 
-    /** default constructor for Models.User object
+    /** default constructor for User object
      * @param ID unique identifier
      */
     public User(String ID){
