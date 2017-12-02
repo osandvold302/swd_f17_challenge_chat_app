@@ -56,7 +56,9 @@ public class Server {
                     output = new ObjectOutputStream(connection.getOutputStream());
                     output.flush();
                     input = new ObjectInputStream(connection.getInputStream());
+
                     processConnection(); // process connection
+
                     nClientsActive--;
                 } catch (EOFException eofException) {
                     eofException.printStackTrace();
@@ -81,15 +83,12 @@ public class Server {
 
         // process connection with client
         private void processConnection() throws IOException {
-            String message = "Connection " + myConID + " successful";
-            output.writeObject(message);
-            output.flush();
 
             do // process messages sent from client
             {
                 try // read message and display it
                 {
-                    message = (String) input.readObject(); // read new message
+                    String message = (String) input.readObject(); // read new message
                     displayMessage("\n" + myConID + message); // display message
                 } // end try
                 catch (ClassNotFoundException classNotFoundException) {
