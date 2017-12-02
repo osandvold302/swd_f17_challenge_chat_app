@@ -22,7 +22,6 @@ Thumbs.db
 .DS_Store
 
 # Android Studio
-*.iml
 .gradle
 /local.properties
 /.idea/workspace.xml
