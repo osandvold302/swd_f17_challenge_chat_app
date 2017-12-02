@@ -18,6 +18,9 @@ public class database_access {
 
             statement = connection.createStatement();
 
+            resultSet = statement.executeQuery("");
+
+
 
         }catch(SQLException sqlerr){
 
