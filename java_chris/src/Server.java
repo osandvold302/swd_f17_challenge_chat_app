@@ -98,19 +98,5 @@ public class Server {
 
             } while (!message.equals("CLIENT>>> TERMINATE"));
         } // end method processConnection
-
-        // close streams and socket
-        private void closeConnection() {
-            alive = false;
-            try {
-                output.close(); // close output stream
-                input.close(); // close input stream
-                connection.close(); // close socket
-            } // end try
-            catch (IOException ioException) {
-                ioException.printStackTrace();
-            } // end catch
-        } // end method closeConnection
-
     }
 }
