@@ -30,13 +30,13 @@ public class UserDriver extends Application
     /** call this function when the user changes their state
      * @param fxmlView the string representation of the view to switch to
      */
-    public void switchViews(String fxmlView){
+    public final void switchViews(String fxmlView){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlView));
 
         try{
             Parent root = (Parent)loader.load();
 
-            stage.setScene(new Scene(root));
+            this.stage.setScene(new Scene(root));
         }catch(IOException err){
             err.printStackTrace();
         }

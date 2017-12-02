@@ -1,5 +1,7 @@
 package Controllers;
 
+import Driver.UserDriver;
+import Models.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -21,12 +23,22 @@ public class StartUpController {
     /** this field stores whether the username is valid or not*/
     private boolean validUser;
 
+    private User user;
+
     /** this function will validate whether the username is in the database or not*/
     @FXML
     private void validUserName(ActionListener login){
         username = userIDField.getText();
         // TODO: DATABASE VERIFICATION
         validUser = true;
+
+        // if user is in channel
+        // change the view to the tab view
+        // else if user is not in channel
+        // change view to new Channel View
+
+        user = new User(username);
+
     }
 
     /** this function will return the username the client sends to the app
