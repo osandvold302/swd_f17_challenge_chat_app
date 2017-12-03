@@ -67,17 +67,12 @@ public class User {
      * @param users who they want to add
      * @return whether they were successful in adding a channel
      */
-    public boolean newChannel(String channel,String[] users){
-        if(channelExists(channel)){
-            return false;
-        }else {
-            try {
-                output.writeObject(new NewChannelMessage(channel, users));
-                output.flush();
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
-            return true;
+    public void newChannel(String channel,String[] users){
+        try {
+            output.writeObject(new NewChannelMessage(channel, users));
+            output.flush();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 

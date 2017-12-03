@@ -23,19 +23,6 @@ public class NewChannelController extends GeneralController {
     @FXML
     private TextArea usersList;
 
-    /** validate channel name
-     * @param channel the name the client wants for their channel
-     * @return true if the channel is unique, false if not
-     */
-    public boolean validateChannelName(String channel){
-        // TODO:
-        // if channel is not in database
-        // write to database
-        // return true
-        //else
-        return false;
-    }
-
     /** will return an array of the list of users to add to the channel
      * @param nameListWithCommas a string with all the names of the users to add in a channel
      * @return the array of all the users in the channel
@@ -59,14 +46,13 @@ public class NewChannelController extends GeneralController {
      */
     @FXML
     public void setUpNewChannel(ActionEvent makeNewChannel){
-        String tryChannelName = channelName.getText();
 
         // TODO: database
         // if channel name exists in database
         // channelName.setStyle("-fx-text-inner-color: red;");
         // channelName.setText("This channel already exists :(");
         // else
-        String[] usersInChannel = getListOfNames(usersList.getText());
+        getClient().newChannel(channelName.getText(),getListOfNames(usersList.getText()));
         // send the usersInChannel to the User to send to the Server
 
         // TODO: Change View
