@@ -1,4 +1,3 @@
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -6,7 +5,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class User {
     /** this is a stream that the user will write to when they send messages to a channel*/
@@ -26,18 +24,27 @@ public class User {
      * @param ID unique identifier
      */
     public User(String ID){
+        String[] channelList = null;
         try{
             client = new Socket(InetAddress.getByName("127.0.0.1"), 23555);
             output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(ID);
             output.flush();
             input = new ObjectInputStream(client.getInputStream());
+            channelList = (String[])input.readObject();
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
         }
         channels = new ArrayList<>();
+        if(channelList!=null){
+            for(int i=0; i<channelList.length; i++){
+                channels.add(channelList[i]);
+            }
+        }
         this.ID = ID;
     }
 
@@ -47,7 +54,7 @@ public class User {
      */
     public boolean sendMessage(String message){
         try {
-            output.writeObject(currentChannel+","+ID+","+message);
+            output.writeObject(new TextMessage(currentChannel,ID,message));
             output.flush();
             return true;
         }catch(IOException e){
@@ -65,12 +72,7 @@ public class User {
             return false;
         }else {
             try {
-                StringBuilder builder = new StringBuilder();
-                builder.append(channel);
-                for (String user : users) {
-                    builder.append("," + user);
-                }
-                output.writeObject(builder.toString());
+                output.writeObject(new NewChannelMessage(channel, users));
                 output.flush();
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -92,7 +94,7 @@ public class User {
     //Send a message to request the history of a channel
     public void requestMessageHistory(String channel){
         try {
-            output.writeObject(channel + "," + "REQUEST" + "," + "REQUESTOLDMESSAGES");
+            output.writeObject(new RequestMessage(channel));
             output.flush();
         }catch(IOException ioe){
             ioe.printStackTrace();
@@ -108,32 +110,19 @@ public class User {
     public String receiveMessage(){
         try {
             //Get information from the server and find out what group and user it is from
-            String information = (String) input.readObject();
-            Scanner splitter = new Scanner(information);
-            splitter.useDelimiter(",");
-            String channel = splitter.next();
-            String user = splitter.next();
-            String message = splitter.next();
-            StringBuilder wholeMessage = new StringBuilder();
-            wholeMessage.append(message);
-            while(splitter.hasNext()){
-                wholeMessage.append(","+splitter.next());
-            }
-            splitter.close();
+            Message message = (Message) input.readObject();
+            if(message instanceof RequestFulfillment){
+                String channel = ((RequestFulfillment) message).getChannel();
+                if(channelExists(channel)){
+                    return "REQUEST:"+((RequestFulfillment)message).getText();
+                } else{
+                    return "NEWCHANNEL:"+((RequestFulfillment) message).getText();
+                }
 
-            if(user.equals("REQUEST"))
-            {
-                return "REQUEST:"+wholeMessage.toString();
-            }
-
-            if(!channelExists(channel)){
-                channels.add(channel);
-                return "NewChannel:"+channel;
-            }
-
-            //If this channel is the one the user is currently looking at, spit out the message
-            if(channel.equals(currentChannel)) {
-                return user + " >> " + wholeMessage.toString();
+            } else if(message instanceof TextMessage){
+                if(((TextMessage) message).getChannel().equals(currentChannel)){
+                    return ((TextMessage) message).getUser()+" >> "+((TextMessage)message).getMessage();
+                }
             }
         }catch (IOException ioe){
             ioe.printStackTrace();
@@ -145,7 +134,7 @@ public class User {
 
     public void close(){
         try {
-            output.writeObject("TERMINATE");
+            output.writeObject(new TextMessage("","","TERMINATE"));
             output.flush();
             output.close();
             input.close();
