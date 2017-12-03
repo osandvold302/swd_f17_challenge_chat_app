@@ -20,9 +20,8 @@
       <Label layoutX="157.0" layoutY="274.0" text="Enter Username" />
       <ImageView fitHeight="107.0" fitWidth="129.0" layoutX="147.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@partyparrot.gif" />
+            <Image url="@../../../anjela_dir/src/partyparrot.gif" />
          </image>
       </ImageView>
-      <Label fx:id="errorLabel" layoutX="86.0" layoutY="301.0" text="Username should not contain any commas" />
    </children>
 </AnchorPane>

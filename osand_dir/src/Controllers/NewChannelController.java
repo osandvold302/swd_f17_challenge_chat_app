@@ -80,7 +80,7 @@ public class NewChannelController {
         // send the usersInChannel to the User to send to the Server
 
         // TODO: Change View
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
 
         try{
             Parent root = (Parent)loader.load();

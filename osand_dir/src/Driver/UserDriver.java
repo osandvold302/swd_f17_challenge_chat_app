@@ -7,8 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class UserDriver extends Application
 {
     private Stage stage;
@@ -17,7 +15,7 @@ public class UserDriver extends Application
         this.stage = primaryStage;
 
         // get the FXML reference loader
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("startupView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/startupView.fxml"));
         Parent root = (Parent)loader.load();    // create a root based on the view
 
         stage.setScene(new Scene(root));

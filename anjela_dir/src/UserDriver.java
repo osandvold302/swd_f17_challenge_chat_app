@@ -10,7 +10,7 @@ public class UserDriver extends Application
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("startupView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Views/startupView.fxml"));
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
