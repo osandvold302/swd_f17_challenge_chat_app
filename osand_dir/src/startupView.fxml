@@ -20,7 +20,7 @@
       <Label layoutX="157.0" layoutY="274.0" text="Enter Username" />
       <ImageView fitHeight="107.0" fitWidth="129.0" layoutX="147.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../anjela_dir/src/partyparrot.gif" />
+            <Image url="@partyparrot.gif" />
          </image>
       </ImageView>
    </children>
