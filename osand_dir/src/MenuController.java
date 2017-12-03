@@ -7,10 +7,9 @@ public class MenuController extends GeneralController {
     // get User
     // get channels
     // for each channel, add a button into the VBox
-
     @FXML
     private VBox messageDispArea;
 
-
+    
     // messageDispArea.getChildren().add(new Button(channel.getName()));
 }
