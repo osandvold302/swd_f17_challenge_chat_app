@@ -20,6 +20,7 @@ public class UserDriver extends Application
         FXMLLoader loader = new FXMLLoader(getClass().getResource("startupView.fxml"));
         Parent root = (Parent)loader.load();    // create a root based on the view
 
+        root.getStylesheets().add("startupViewSheet.css");
         stage.setScene(new Scene(root));
         stage.show();
 
