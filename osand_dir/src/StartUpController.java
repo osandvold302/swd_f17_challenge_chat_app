@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 
@@ -22,7 +23,6 @@ public class StartUpController extends GeneralController {
     /** this field stores the username the client enters in the startup screen*/
     private String username;
 
-    private User user;
     /** this field holds the label editor*/
     @FXML
     private Label errorLabel;
@@ -53,9 +53,7 @@ public class StartUpController extends GeneralController {
             }catch(IOException err){
                 err.printStackTrace();
             }finally {
-                user = new User(username);
-                MenuController control = loader.getController();
-                control.setClient(user);
+                MenuController.setClient(new User(username));
             }
         }else{    // they don't have channels - set up the create channel view
             loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
@@ -65,9 +63,7 @@ public class StartUpController extends GeneralController {
             }catch(IOException err){
                 err.printStackTrace();
             }finally {
-                user = new User(username);
-                NewChannelController control = loader.getController();
-                control.setClient(user);
+                NewChannelController.setClient(new User(username));
             }
         }
     }
