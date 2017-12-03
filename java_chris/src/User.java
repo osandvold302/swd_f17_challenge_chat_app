@@ -132,6 +132,10 @@ public class User {
         return null;
     }
 
+    public ArrayList<String> getChannels(){
+        return channels;
+    }
+
     public void close(){
         try {
             output.writeObject(new TextMessage("","","TERMINATE"));
