@@ -53,6 +53,7 @@ public class StartUpController extends GeneralController {
                 err.printStackTrace();
             }finally {
                 MenuController.setClient(newUser);
+                MenuController.initMenu();
             }
         }else{    // they don't have channels - set up the create channel view
             loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));

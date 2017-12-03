@@ -143,4 +143,10 @@ public class User {
         }
     }
 
+    /** method to get the current channel user is in
+     * @return the string of the channel name
+     */
+    public String getCurrentChannel() {
+        return currentChannel;
+    }
 }
