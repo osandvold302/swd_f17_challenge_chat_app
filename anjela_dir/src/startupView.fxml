@@ -23,7 +23,7 @@
       <Label layoutX="259.0" layoutY="257.0" text="Enter Username" />
       <ImageView fitHeight="107.0" fitWidth="129.0" layoutX="236.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../osand_dir/src/Views/partyparrot.gif" />
+            <Image url="@partyparrot.gif" />
          </image>
       </ImageView>
    </children>
