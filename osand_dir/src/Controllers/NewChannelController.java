@@ -2,11 +2,16 @@ package Controllers;
 
 import Models.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /** this class is the controller for the view to create a new channel*/
 public class NewChannelController {
@@ -21,6 +26,12 @@ public class NewChannelController {
     /** this field stores the list of users the client wants to add to a channel*/
     @FXML
     private TextArea usersList;
+
+    private static Stage primaryStage;
+
+    public static void setPrimaryStage(Stage primaryStage) {
+        NewChannelController.primaryStage = primaryStage;
+    }
 
     /** validate channel name
      * @param channel the name the client wants for their channel
@@ -69,7 +80,16 @@ public class NewChannelController {
         // send the usersInChannel to the User to send to the Server
 
         // TODO: Change View
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
 
+        try{
+            Parent root = (Parent)loader.load();
+
+            primaryStage.setScene(new Scene(root));
+
+        }catch(IOException err){
+            err.printStackTrace();
+        }
     }
 
 }

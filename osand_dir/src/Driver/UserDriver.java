@@ -1,5 +1,6 @@
 package Driver;
 
+import Controllers.NewChannelController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,9 @@ public class UserDriver extends Application
 
         stage.setScene(new Scene(root));
         stage.show();
+
+        loader.getController().getClass();
+        NewChannelController.setPrimaryStage(stage);
     }
 
     public static void main(String[] args) {
@@ -31,14 +35,6 @@ public class UserDriver extends Application
      * @param fxmlView the string representation of the view to switch to
      */
     public final void switchViews(String fxmlView){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlView));
 
-        try{
-            Parent root = (Parent)loader.load();
-
-            this.stage.setScene(new Scene(root));
-        }catch(IOException err){
-            err.printStackTrace();
-        }
     }
 }
