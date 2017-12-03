@@ -41,12 +41,12 @@ public class StartUpController extends GeneralController {
         }
         userIDField.setStyle("-fx-text-inner-color: default;");
         errorLabel.setStyle("-fx-text-inner-color: default;");
-        // if the user exits and username does not have a comma inside
+        User newUser = new User(username);
         FXMLLoader loader;
-        if(userExists(username)){
+        // channels exist for user
+        if(userExists(newUser)){
             // change view to menu view
             loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
-            //TODO: get all channels from this user
             try{
                 Parent root = (Parent)loader.load();
                 getStage().setScene(new Scene(root));
@@ -54,6 +54,8 @@ public class StartUpController extends GeneralController {
                 err.printStackTrace();
             }finally {
                 MenuController.setClient(new User(username));
+
+                // TODO: get all the channels they're in and set to the new User ref
             }
         }else{    // they don't have channels - set up the create channel view
             loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
@@ -64,6 +66,8 @@ public class StartUpController extends GeneralController {
                 err.printStackTrace();
             }finally {
                 NewChannelController.setClient(new User(username));
+
+                // push to new channel create view to create a channel
             }
         }
     }
@@ -76,7 +80,7 @@ public class StartUpController extends GeneralController {
     }
 
     /** this function will return whether the username entered is valid
-     * the username MUST NOT CONTAIN ANY COMMAS
+     * the username MUST NOT CONTAIN ANY COMMAS OR SPACES
      * @return true if valid, false if not
      */
     public boolean isValidUser(String username) {
@@ -93,7 +97,7 @@ public class StartUpController extends GeneralController {
     }
 
     /** TODO: */
-    public boolean userExists(String lookupName){
+    public boolean userExists(User lookupName){
         return true;
     }
 }

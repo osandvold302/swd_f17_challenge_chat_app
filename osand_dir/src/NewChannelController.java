@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -58,7 +59,7 @@ public class NewChannelController extends GeneralController {
      * @param makeNewChannel the button pressed to create a channel
      */
     @FXML
-    public void setUpNewChannel(ActionListener makeNewChannel){
+    public void setUpNewChannel(ActionEvent makeNewChannel){
         String tryChannelName = channelName.getText();
 
         // TODO: database

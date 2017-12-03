@@ -24,9 +24,9 @@ public class GeneralController {
     }
 
     /** setter for Client reference
-     * @param client that this controller is using
+     * @param user that this controller is using
      */
-    public static void setClient(User client) {
-        client = client;
+    public static void setClient(User user) {
+        client = user;
     }
 }
