@@ -5,13 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import sun.java2d.loops.FillRect;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /** this class is the controller for the view to create a new channel*/
-public class NewChannelController extends GeneralController{
+public class NewChannelController extends GeneralController {
     /** the user who is creating the new channel*/
     private String username;
     /** this field stores the reference to the text field object the user writes their channel name in*/

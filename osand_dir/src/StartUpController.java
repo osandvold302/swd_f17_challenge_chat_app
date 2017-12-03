@@ -1,3 +1,4 @@
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,7 @@ import java.io.IOException;
 /** this model will handle the events on the startup screen - if the user enters a valid username,
  * they will be able to advance to the next screen to see their messages or create a channel
  */
-public class StartUpController extends GeneralController{
+public class StartUpController extends GeneralController {
     /** this reference is to the button on the startup screen*/
     @FXML
     private Button goButton;
@@ -32,11 +33,11 @@ public class StartUpController extends GeneralController{
         username = userIDField.getText();
         // TODO: DATABASE VERIFICATION
 
-        while(!isValidUser(username)){
-            userIDField.setStyle("-fx-text-inner-color: red;");
-            errorLabel.setStyle("-fx-text-inner-color: red;");
+        if(!isValidUser(username)){
+            userIDField.setStyle("-fx-background-color: red;");
+            errorLabel.setStyle("-fx-background-color: red;");
             System.out.println("User entered invalid information");
-            username = userIDField.getText();
+            return;
         }
         userIDField.setStyle("-fx-text-inner-color: default;");
         errorLabel.setStyle("-fx-text-inner-color: default;");
@@ -83,7 +84,16 @@ public class StartUpController extends GeneralController{
      * @return true if valid, false if not
      */
     public boolean isValidUser(String username) {
-        return (username.matches("^,") || username.contains(" "));
+        if(username.contains(",")){
+            System.out.println("Username contains comma");
+            return false;
+        }else if(username.contains(" ")){
+            System.out.println("Username contains space");
+            return false;
+        }else {
+            System.out.println("User name is valid");
+            return true;
+        }
     }
 
     /** TODO: */
