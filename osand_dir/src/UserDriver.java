@@ -15,10 +15,10 @@ public class UserDriver extends Application
         this.stage = primaryStage;
 
         // get the FXML reference loader
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/startupView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("startupView.fxml"));
         Parent root = (Parent)loader.load();    // create a root based on the view
 
-        root.getStylesheets().add("startupViewSheet.css");
+        root.getStylesheets().add("C:\\Users\\osand\\Desktop\\SWD\\team15_swd_challenge\\team15_swd\\osand_dir\\src\\Driver\\startupViewSheet.css");
         stage.setScene(new Scene(root));
         stage.show();
 
@@ -28,12 +28,5 @@ public class UserDriver extends Application
 
     public static void main(String[] args) {
         Application.launch(args);
-    }
-
-    /** call this function when the user changes their state
-     * @param fxmlView the string representation of the view to switch to
-     */
-    public final void switchViews(String fxmlView){
-
     }
 }
