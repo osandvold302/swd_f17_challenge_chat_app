@@ -1,4 +1,4 @@
-package Models;// Modified Fig. 27.5: Multi-threaded Chat Server.java
+// Modified Fig. 27.5: Multi-threaded Chat Server.java
 // Server portion of a client/server stream-socket connection. 
 
 import javax.swing.*;

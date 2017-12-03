@@ -1,7 +1,4 @@
-package Controllers;
-
-import Driver.UserDriver;
-import Models.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,9 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /** this model will handle the events on the startup screen - if the user enters a valid username,
@@ -34,7 +28,7 @@ public class StartUpController extends GeneralController{
 
     /** this function will validate whether the username is in the database or not*/
     @FXML
-    private void validUserName(ActionListener login){
+    public void validUserName(ActionEvent login){
         username = userIDField.getText();
         // TODO: DATABASE VERIFICATION
 
@@ -53,23 +47,25 @@ public class StartUpController extends GeneralController{
             //TODO: get all channels from this user
             try{
                 Parent root = (Parent)loader.load();
-                primaryStage.setScene(new Scene(root));
+                getStage().setScene(new Scene(root));
             }catch(IOException err){
                 err.printStackTrace();
             }finally {
                 user = new User(username);
-                loader.<MenuController>getController().setClient(user);
+                MenuController control = loader.getController();
+                control.setClient(user);
             }
         }else{    // they don't have channels - set up the create channel view
             loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
             try{
                 Parent root = (Parent)loader.load();
-                primaryStage.setScene(new Scene(root));
+                getStage().setScene(new Scene(root));
             }catch(IOException err){
                 err.printStackTrace();
             }finally {
                 user = new User(username);
-                loader.<NewChannelController>getController().setClient(user);
+                NewChannelController control = loader.getController();
+                control.setClient(user);
             }
         }
     }
@@ -86,7 +82,7 @@ public class StartUpController extends GeneralController{
      * @return true if valid, false if not
      */
     public boolean isValidUser(String username) {
-        return username.matches("^,");
+        return (username.matches("^,") || !username.contains(" "));
     }
 
     /** TODO: */
