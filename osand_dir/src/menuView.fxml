@@ -20,8 +20,8 @@
                     <VBox fx:id="messageDispArea" prefHeight="477.0" prefWidth="396.0" />
                 </content>
             </ScrollPane>
-      <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="&lt;&lt; Back" />
-      <TextField fx:id="textMessageField" layoutY="502.0" prefHeight="51.0" prefWidth="320.0" />
-      <Button fx:id="sendMessageButton" layoutX="320.0" layoutY="502.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="78.0" text="SEND" />
+      <Button fx:id="backToMenu" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="&lt;&lt; Back" />
+      <TextField fx:id="textMessageField" layoutY="502.0" onAction="#messageListenerText" prefHeight="51.0" prefWidth="320.0" />
+      <Button fx:id="sendMessageButton" layoutX="320.0" layoutY="502.0" mnemonicParsing="false" onAction="#messageListenerButton" prefHeight="51.0" prefWidth="78.0" text="SEND" />
     </children>
 </AnchorPane>
