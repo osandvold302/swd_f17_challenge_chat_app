@@ -1,6 +1,3 @@
-package Controllers;
-
-import Models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import sun.java2d.loops.FillRect;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -75,15 +72,14 @@ public class NewChannelController extends GeneralController{
 
         // TODO: Change View
         FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
-
         try{
             Parent root = (Parent)loader.load();
 
-            primaryStage.setScene(new Scene(root));
-
+            getStage().setScene(new Scene(root));
         }catch(IOException err){
             err.printStackTrace();
         }
+        // loader.<NewChannelController>getController().setClient(user);
     }
 
 }

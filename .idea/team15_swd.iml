@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/osand_dir/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/anjela_dir/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/java_chris/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
