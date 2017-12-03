@@ -66,7 +66,7 @@ public class StartUpController {
             // create a new User
             User user = new User(username);
 
-            loader.getClass().setUser(user);
+            loader.<MenuController>getController().setUser(user);
             //TODO: get all channels from this user
         }else if(isValidUser(username)){    // they don't have channels
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
