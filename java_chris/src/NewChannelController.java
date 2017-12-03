@@ -46,25 +46,29 @@ public class NewChannelController extends GeneralController {
      */
     @FXML
     public void setUpNewChannel(ActionEvent makeNewChannel){
-
-        // TODO: database
-        // if channel name exists in database
-        // channelName.setStyle("-fx-text-inner-color: red;");
-        // channelName.setText("This channel already exists :(");
-        // else
-        getClient().newChannel(channelName.getText(),getListOfNames(usersList.getText()));
-        // send the usersInChannel to the User to send to the Server
-
-        // TODO: Change View
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
-        try{
-            Parent root = (Parent)loader.load();
-
-            getStage().setScene(new Scene(root));
-        }catch(IOException err){
-            err.printStackTrace();
+        String channel = channelName.getText();
+        getClient().newChannel(channel,getListOfNames(usersList.getText()));
+        boolean determined = false;
+        while(!determined){
+            String message = getClient().receiveMessage();
+            if(message.equals("Channel already exists!")){
+                channelName.setStyle("-fx-text-inner-color: red;");
+                channelName.setText("This channel already exists :(");
+                determined = true;
+            }
+            if(message.substring(0,11).equals("NEWCHANNEL:")){
+                getClient().changeChannel(channel);
+                determined = true;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
+                try{
+                    Parent root = (Parent)loader.load();
+                    getStage().setScene(new Scene(root));
+                }catch(IOException err){
+                    err.printStackTrace();
+                }
+                MessageController.setClient(getClient());
+            }
         }
-        // loader.<NewChannelController>getController().setClient(user);
     }
 
 }

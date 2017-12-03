@@ -111,12 +111,17 @@ public class User {
                 if(channelExists(channel)){
                     return "REQUEST:"+((RequestFulfillment)message).getText();
                 } else{
+                    channels.add(channel);
                     return "NEWCHANNEL:"+((RequestFulfillment) message).getText();
                 }
 
             } else if(message instanceof TextMessage){
-                if(((TextMessage) message).getChannel().equals(currentChannel)){
+                String channel = ((TextMessage) message).getChannel();
+                if(channel.equals(currentChannel)){
                     return ((TextMessage) message).getUser()+" >> "+((TextMessage)message).getMessage();
+                }
+                if(!channelExists(channel)){
+                    return "Channel already exists!";
                 }
             }
         }catch (IOException ioe){
