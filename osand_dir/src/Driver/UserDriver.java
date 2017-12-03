@@ -23,7 +23,7 @@ public class UserDriver extends Application
         stage.show();
 
         loader.getController().getClass();
-        NewChannelController.setPrimaryStage(stage);
+        NewChannelController.setStage(stage);
     }
 
     public static void main(String[] args) {

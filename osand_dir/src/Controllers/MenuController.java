@@ -7,18 +7,13 @@ import javafx.scene.layout.VBox;
 
 /** this controller will be in control fo the "menuView.fxml" view
  */
-public class MenuController {
+public class MenuController extends GeneralController{
     // get User
     // get channels
     // for each channel, add a button into the VBox
 
-    private User user;
     @FXML
     private VBox messageDispArea;
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
 
     // messageDispArea.getChildren().add(new Button(channel.getName()));

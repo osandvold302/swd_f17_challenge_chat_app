@@ -17,7 +17,7 @@ import java.io.IOException;
 /** this model will handle the events on the startup screen - if the user enters a valid username,
  * they will be able to advance to the next screen to see their messages or create a channel
  */
-public class StartUpController {
+public class StartUpController extends GeneralController{
     /** this reference is to the button on the startup screen*/
     @FXML
     private Button goButton;
@@ -31,12 +31,6 @@ public class StartUpController {
     /** this field holds the label editor*/
     @FXML
     private Label errorLabel;
-    /** this holds the stage the gui will be posted to*/
-    private static Stage primaryStage;
-
-    public static void setStage(Stage stage){
-        primaryStage = stage;
-    }
 
     /** this function will validate whether the username is in the database or not*/
     @FXML
@@ -52,34 +46,32 @@ public class StartUpController {
         userIDField.setStyle("-fx-text-inner-color: default;");
         errorLabel.setStyle("-fx-text-inner-color: default;");
         // if the user exits and username does not have a comma inside
-        if(userExists(username) && isValidUser(username)){
+        FXMLLoader loader;
+        if(userExists(username)){
             // change view to menu view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
-
-            try{
-                Parent root = (Parent)loader.load();
-                primaryStage.setScene(new Scene(root)); // change the root
-
-            }catch(IOException err){
-                err.printStackTrace();
-            }
-            // create a new User
-            User user = new User(username);
-
-            loader.<MenuController>getController().setUser(user);
+            loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
             //TODO: get all channels from this user
-        }else if(isValidUser(username)){    // they don't have channels
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
-
             try{
                 Parent root = (Parent)loader.load();
                 primaryStage.setScene(new Scene(root));
             }catch(IOException err){
                 err.printStackTrace();
+            }finally {
+                user = new User(username);
+                loader.<MenuController>getController().setClient(user);
+            }
+        }else{    // they don't have channels - set up the create channel view
+            loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
+            try{
+                Parent root = (Parent)loader.load();
+                primaryStage.setScene(new Scene(root));
+            }catch(IOException err){
+                err.printStackTrace();
+            }finally {
+                user = new User(username);
+                loader.<NewChannelController>getController().setClient(user);
             }
         }
-        user = new User(username);
-
     }
 
     /** this function will return the username the client sends to the app

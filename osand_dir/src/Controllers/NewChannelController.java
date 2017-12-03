@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /** this class is the controller for the view to create a new channel*/
-public class NewChannelController {
+public class NewChannelController extends GeneralController{
     /** the user who is creating the new channel*/
     private String username;
     /** this field stores the reference to the text field object the user writes their channel name in*/
@@ -26,12 +26,6 @@ public class NewChannelController {
     /** this field stores the list of users the client wants to add to a channel*/
     @FXML
     private TextArea usersList;
-
-    private static Stage primaryStage;
-
-    public static void setPrimaryStage(Stage primaryStage) {
-        NewChannelController.primaryStage = primaryStage;
-    }
 
     /** validate channel name
      * @param channel the name the client wants for their channel
