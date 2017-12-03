@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane fx:id="anchorTitle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="messageController">
+    <children>
+            <Label alignment="CENTER" layoutX="142.0" layoutY="4.0" prefHeight="31.0" prefWidth="115.0" text="Messages">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <ScrollPane fx:id="scrollPane" layoutY="35.0" prefHeight="467.0" prefWidth="398.0">
+                <content>
+                    <VBox fx:id="messageDispArea" prefHeight="477.0" prefWidth="396.0" />
+                </content>
+            </ScrollPane>
+      <Button fx:id="backToMenu" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="&lt;&lt; Back" />
+      <TextField fx:id="textMessageField" layoutY="502.0" onAction="#messageListenerText" prefHeight="51.0" prefWidth="320.0" />
+      <Button fx:id="sendMessageButton" layoutX="320.0" layoutY="502.0" mnemonicParsing="false" onAction="#messageListenerButton" prefHeight="51.0" prefWidth="78.0" text="SEND" />
+    </children>
+</AnchorPane>
