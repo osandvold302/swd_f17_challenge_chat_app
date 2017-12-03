@@ -12,6 +12,7 @@ public class UserDriver extends Application
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Views/startupView.fxml"));
 
+        root.getStylesheets().add("startupViewSheet.css");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
