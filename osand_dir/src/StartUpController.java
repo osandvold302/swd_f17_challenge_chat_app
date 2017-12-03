@@ -1,4 +1,3 @@
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,9 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 /** this model will handle the events on the startup screen - if the user enters a valid username,
  * they will be able to advance to the next screen to see their messages or create a channel
@@ -31,8 +31,6 @@ public class StartUpController extends GeneralController {
     @FXML
     private void validUserName(ActionEvent login){
         username = userIDField.getText();
-        // TODO: DATABASE VERIFICATION
-
         if(!isValidUser(username)){
             userIDField.setStyle("-fx-background-color: red;");
             errorLabel.setStyle("-fx-background-color: red;");
@@ -42,9 +40,10 @@ public class StartUpController extends GeneralController {
         userIDField.setStyle("-fx-text-inner-color: default;");
         errorLabel.setStyle("-fx-text-inner-color: default;");
         User newUser = new User(username);
+        ArrayList<String> channels = newUser.getChannels();
         FXMLLoader loader;
         // channels exist for user
-        if(userExists(newUser)){
+        if(!channels.isEmpty()){
             // change view to menu view
             loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
             try{
@@ -53,9 +52,8 @@ public class StartUpController extends GeneralController {
             }catch(IOException err){
                 err.printStackTrace();
             }finally {
-                MenuController.setClient(new User(username));
-
-                // TODO: get all the channels they're in and set to the new User ref
+                MenuController.setClient(newUser);
+                MenuController.initMenu();
             }
         }else{    // they don't have channels - set up the create channel view
             loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
@@ -65,9 +63,7 @@ public class StartUpController extends GeneralController {
             }catch(IOException err){
                 err.printStackTrace();
             }finally {
-                NewChannelController.setClient(new User(username));
-
-                // push to new channel create view to create a channel
+                NewChannelController.setClient(newUser);
             }
         }
     }
@@ -96,8 +92,4 @@ public class StartUpController extends GeneralController {
         }
     }
 
-    /** TODO: */
-    public boolean userExists(User lookupName){
-        return true;
-    }
 }

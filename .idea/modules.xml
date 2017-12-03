@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/shared_dir/shared_dir.iml" filepath="$PROJECT_DIR$/shared_dir/shared_dir.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/team15_swd.iml" filepath="$PROJECT_DIR$/.idea/team15_swd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java_chris/java_chris.iml" filepath="$PROJECT_DIR$/java_chris/java_chris.iml" />
+      <module fileurl="file://$PROJECT_DIR$/osand_dir/osand_dir.iml" filepath="$PROJECT_DIR$/osand_dir/osand_dir.iml" />
     </modules>
   </component>
 </project>
