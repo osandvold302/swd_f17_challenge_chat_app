@@ -41,11 +41,10 @@ public class User {
             cnfe.printStackTrace();
         }
         channels = new ArrayList<>();   // give memory to a new channel list
-        if(channelList!=null){  // add channels from server to arrayList
-            for(int i=0; i<channelList.length; i++){
-                channels.add(channelList[i]);
-            }
+        for(int i=0; i<channelList.length; i++){
+            channels.add(channelList[i]);
         }
+        System.out.println("User created with "+channels.size()+" channels.");
         this.ID = ID;   // set ID
     }
 

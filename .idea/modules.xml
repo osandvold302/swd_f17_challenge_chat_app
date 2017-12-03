@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/java_chris/java_chris.iml" filepath="$PROJECT_DIR$/java_chris/java_chris.iml" />
       <module fileurl="file://$PROJECT_DIR$/osand_dir/osand_dir.iml" filepath="$PROJECT_DIR$/osand_dir/osand_dir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
     </modules>
   </component>
 </project>

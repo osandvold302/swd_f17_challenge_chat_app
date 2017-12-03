@@ -36,6 +36,7 @@ public class Server extends JFrame {
         add(new JScrollPane(displayArea), BorderLayout.CENTER);
         setSize(300, 300);
         setVisible(true);
+        outputs = new HashMap<>();
     }
 
     /**
@@ -99,8 +100,12 @@ public class Server extends JFrame {
                     output = new ObjectOutputStream(connection.getOutputStream());
                     input = new ObjectInputStream(connection.getInputStream());
                     ID = (String) input.readObject();
+                    displayMessage("New User connected with ID: "+ID+"\n");
                     outputs.put(ID,this);
+                    displayMessage("User added to map\n");
                     output.writeObject(getListFromFile("User-Channel.csv",ID));
+                    output.flush();
+                    displayMessage("Channel list sent.\n");
                     processConnection();
                 }
                 catch (EOFException eofException) {
@@ -187,7 +192,7 @@ public class Server extends JFrame {
          */
         private void addChannel(String channel, String[] users){
             try {//Write to the end of the file a new line containing the name of the channel and all of the users
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Client-User.csv", true));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".\\shared\\src\\Client-User.csv", true));
                 StringBuilder builder = new StringBuilder();
                 builder.append(channel);
                 for(int i=0; i<users.length; i++){
@@ -216,7 +221,7 @@ public class Server extends JFrame {
                         entries.set(i,entries.get(i)+user+" >> "+message+",");
                     }
                 }
-                BufferedWriter writer = new BufferedWriter(new FileWriter("Channel-Log.csv"));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
                 for(String e:entries){//Rewrite the file with the new message appended
                     writer.write(e+"\n");
                 }
@@ -232,7 +237,6 @@ public class Server extends JFrame {
          */
         private String getConversationHistory(String channel){
             StringBuilder builder = new StringBuilder();
-            try {//Read each line from the file
                 ArrayList<String> entries = fileToArray("Channel-Log.csv");
                 for(String e: entries) {//For each line, check if the channel is on the specified line.
                     Scanner lineReader = new Scanner(e);
@@ -244,9 +248,6 @@ public class Server extends JFrame {
                         return builder.toString();
                     }
                 }
-            } catch(IOException ioe){
-                ioe.printStackTrace();
-            }
             return null;
         }
 
@@ -256,7 +257,6 @@ public class Server extends JFrame {
          * @return true if channel already exists and false if it doesn't
          */
         private boolean channelExists(String channel){
-            try {//Read each line from the file
                 ArrayList<String> entries = fileToArray("Channel-User.csv");
                 for(String e: entries) {//In each line, if the first entry is equal to the current channel, return true
                     Scanner lineReader = new Scanner(e);
@@ -265,11 +265,6 @@ public class Server extends JFrame {
                         return true;
                     }
                 }
-            } catch(FileNotFoundException fnfe){
-                fnfe.printStackTrace();
-            } catch(IOException ioe){
-                ioe.printStackTrace();
-            }
             return false;
         }
 
@@ -281,26 +276,29 @@ public class Server extends JFrame {
          */
         private String[] getListFromFile(String fileName, String keyWord){
             ArrayList<String> users = new ArrayList<>();
-            try {//Read each line from the file
                 ArrayList<String> entries = fileToArray(fileName);
-                for(String e: entries) {//For each line, if the first term is the key word, add the terms following it to the list
-                    Scanner lineReader = new Scanner(e);
-                    lineReader.useDelimiter(",");
-                    if(lineReader.next().equals(keyWord)){
-                        while(lineReader.hasNext()){
-                            users.add(lineReader.next());
+                if(entries.size()!=0) {
+                    for (String e : entries) {//For each line, if the first term is the key word, add the terms following it to the list
+                        Scanner lineReader = new Scanner(e);
+                        lineReader.useDelimiter(",");
+                        if (lineReader.next().equals(keyWord)) {
+                            while (lineReader.hasNext()) {
+                                users.add(lineReader.next());
+                            }
+                            String[] userArray = new String[users.size()];
+                            for (int i = 0; i < userArray.length; i++) {//Switch all of the values from the arraylist to an array
+                                userArray[i] = entries.get(i);
+                            }
+                            displayMessage("getListFromFile: The file had contents and is returning a nonempty array.\n");
+                            return userArray;
                         }
-                        String[] userArray = new String[users.size()];
-                        for(int i=0; i<userArray.length; i++){//Switch all of the values from the arraylist to an array
-                            userArray[i] = entries.get(i);
-                        }
-                        return userArray;
                     }
+                }else{
+                    displayMessage("getListFromFile: The empty file is returning an empty array.\n");
+                    return new String[0];
                 }
-            } catch(IOException ioe){
-                ioe.printStackTrace();
-            }
-            return null;
+            displayMessage("getListFromFile: the list was empty.");
+            return new String[0];
         }
 
         /**
@@ -309,15 +307,28 @@ public class Server extends JFrame {
          * @return An ArrayList of the file contents.
          * @throws IOException
          */
-        private ArrayList<String> fileToArray(String fileName)throws IOException{
+        private ArrayList<String> fileToArray(String fileName){
             ArrayList<String> entries = new ArrayList<>();
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                entries.add(line);
-                line = bufferedReader.readLine();
+            displayMessage("fileToArray: Made arraylist\n");
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(".\\shared\\src\\"+fileName));
+                displayMessage("fileToArray: Made bufferedReader\n");
+                String line = bufferedReader.readLine();
+                while (line != null) {
+                    entries.add(line);
+                    line = bufferedReader.readLine();
+                }
+                bufferedReader.close();
+            }catch (IOException ioe){
+                ioe.printStackTrace();
+                displayMessage("fileToArray: Failed.\n");
             }
-            bufferedReader.close();
+            displayMessage("fileToArray: Buffered reader closed\n");
+            if (entries.isEmpty()) {
+                displayMessage("fileToArray: File " + fileName + " is empty.\n");
+            } else {
+                displayMessage("fileToArray: File " + fileName + " had contents.\n");
+            }
             return entries;
         }
 
