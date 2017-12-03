@@ -28,14 +28,15 @@ public class StartUpController extends GeneralController{
 
     /** this function will validate whether the username is in the database or not*/
     @FXML
-    public void validUserName(ActionEvent login){
+    private void validUserName(ActionEvent login){
         username = userIDField.getText();
         // TODO: DATABASE VERIFICATION
 
         while(!isValidUser(username)){
             userIDField.setStyle("-fx-text-inner-color: red;");
             errorLabel.setStyle("-fx-text-inner-color: red;");
-
+            System.out.println("User entered invalid information");
+            username = userIDField.getText();
         }
         userIDField.setStyle("-fx-text-inner-color: default;");
         errorLabel.setStyle("-fx-text-inner-color: default;");
@@ -82,7 +83,7 @@ public class StartUpController extends GeneralController{
      * @return true if valid, false if not
      */
     public boolean isValidUser(String username) {
-        return (username.matches("^,") || !username.contains(" "));
+        return (username.matches("^,") || username.contains(" "));
     }
 
     /** TODO: */
