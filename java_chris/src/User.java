@@ -26,12 +26,13 @@ public class User {
     public User(String ID){
         String[] channelList = null;
         try{
+            // local host - where the server is already running
             client = new Socket(InetAddress.getByName("127.0.0.1"), 23555);
             output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(ID);
-            output.flush();
+            output.flush(); // send the user ID to the server
             input = new ObjectInputStream(client.getInputStream());
-            channelList = (String[])input.readObject();
+            channelList = (String[])input.readObject(); // get channels from server
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
         } catch (IOException ioe) {
@@ -39,13 +40,13 @@ public class User {
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
-        channels = new ArrayList<>();
-        if(channelList!=null){
+        channels = new ArrayList<>();   // give memory to a new channel list
+        if(channelList!=null){  // add channels from server to arrayList
             for(int i=0; i<channelList.length; i++){
                 channels.add(channelList[i]);
             }
         }
-        this.ID = ID;
+        this.ID = ID;   // set ID
     }
 
     /** send a message from the current channel
@@ -76,7 +77,10 @@ public class User {
         }
     }
 
-    //Sees if user already is a part of a channel with this name
+    /** Sees if user already is a part of a channel with this name
+     * @param channel to check if they are a part of
+     * @return whether they belong to that channel or not
+     */
     public boolean channelExists(String channel){
         for(String chan:channels){
             if(chan.equals(channel)){
@@ -86,7 +90,9 @@ public class User {
         return false;
     }
 
-    //Send a message to request the history of a channel
+    /** Send a message to request the history of a channel
+     * @param channel to get all the messages from
+     */
     public void requestMessageHistory(String channel){
         try {
             output.writeObject(new RequestMessage(channel));
@@ -96,12 +102,17 @@ public class User {
         }
     }
 
-    //Changes channel to specified channel and requests the message history from the server.
+    /** Changes channel to specified channel and requests the message history from the server.
+     * @param channel to set the channel to
+     */
     public void changeChannel(String channel){
         currentChannel = channel;
         requestMessageHistory(channel);
     }
 
+    /** function to get messages from server
+     * @return the message sent from server
+     */
     public String receiveMessage(){
         try {
             //Get information from the server and find out what group and user it is from
@@ -127,10 +138,14 @@ public class User {
         return null;
     }
 
+    /** getter for the channels the user is a part of
+     * @return the arraylist of channels the user is a part of
+     */
     public ArrayList<String> getChannels(){
         return channels;
     }
 
+    /** this function closes all the streams */
     public void close(){
         try {
             output.writeObject(new TextMessage("","","TERMINATE"));
