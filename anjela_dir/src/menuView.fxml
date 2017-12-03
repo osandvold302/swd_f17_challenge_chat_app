@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <AnchorPane fx:id="anchorTitle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
           <AnchorPane fx:id="anchorScroll" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -28,4 +29,7 @@
               </children>
           </AnchorPane>
     </children>
+    <stylesheets>
+        <URL value="menuSheets.css"/>
+    </stylesheets>
 </AnchorPane>

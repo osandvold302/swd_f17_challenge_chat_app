@@ -25,6 +25,6 @@
       <Label fx:id="errorLabel" layoutX="86.0" layoutY="301.0" text="Username should not contain any commas" />
    </children>
    <stylesheets>
-      <URL value="startupViewSheets.ccss"/>
+      <URL value="startupViewSheets.css"/>
    </stylesheets>
 </AnchorPane>
