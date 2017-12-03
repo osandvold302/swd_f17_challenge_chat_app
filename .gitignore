@@ -1,36 +1,42 @@
-#built application files
-*.apk
-*.ap_
+#
+# Project specific excludes
+#
 
-# files for the dex VM
-*.dex
+tomcat
 
-# Java class files
+#
+# Default excludes
+#
+
+# Binaries
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.sar
 *.class
 
-# generated files
-bin/
-gen/
+# Maven 
+target/
 
-# Local configuration file (sdk path, etc)
-local.properties
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
+.idea/
 
-# Windows thumbnail db
-Thumbs.db
 
-# OSX files
+# OS
 .DS_Store
 
-# Android Studio
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-
-#NDK
-obj/
-.externalNativeBuild
+# Misc
+*.swp
+release.properties
+pom.xml.releaseBackup
+pom.xml.tag
