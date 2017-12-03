@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /** this class is the controller for the view to create a new channel*/
@@ -23,19 +22,6 @@ public class NewChannelController extends GeneralController {
     /** this field stores the list of users the client wants to add to a channel*/
     @FXML
     private TextArea usersList;
-
-    /** validate channel name
-     * @param channel the name the client wants for their channel
-     * @return true if the channel is unique, false if not
-     */
-    public boolean validateChannelName(String channel){
-        // TODO:
-        // if channel is not in database
-        // write to database
-        // return true
-        //else
-        return false;
-    }
 
     /** will return an array of the list of users to add to the channel
      * @param nameListWithCommas a string with all the names of the users to add in a channel
@@ -60,26 +46,29 @@ public class NewChannelController extends GeneralController {
      */
     @FXML
     public void setUpNewChannel(ActionEvent makeNewChannel){
-        String tryChannelName = channelName.getText();
-
-        // TODO: database
-        // if channel name exists in database
-        // channelName.setStyle("-fx-text-inner-color: red;");
-        // channelName.setText("This channel already exists :(");
-        // else
-        String[] usersInChannel = getListOfNames(usersList.getText());
-        // send the usersInChannel to the User to send to the Server
-
-        // TODO: Change View
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
-        try{
-            Parent root = (Parent)loader.load();
-
-            getStage().setScene(new Scene(root));
-        }catch(IOException err){
-            err.printStackTrace();
+        String channel = channelName.getText();
+        getClient().newChannel(channel,getListOfNames(usersList.getText()));
+        boolean determined = false;
+        while(!determined){
+            String message = getClient().receiveMessage();
+            if(message.equals("Channel already exists!")){
+                channelName.setStyle("-fx-text-inner-color: red;");
+                channelName.setText("This channel already exists :(");
+                determined = true;
+            }
+            if(message.substring(0,11).equals("NEWCHANNEL:")){
+                getClient().changeChannel(channel);
+                determined = true;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
+                try{
+                    Parent root = (Parent)loader.load();
+                    getStage().setScene(new Scene(root));
+                }catch(IOException err){
+                    err.printStackTrace();
+                }
+                MessageController.setClient(getClient());
+            }
         }
-        // loader.<NewChannelController>getController().setClient(user);
     }
 
 }
