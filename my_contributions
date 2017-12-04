@@ -1,0 +1,23 @@
+This was a group project between myself, Chris Sullivan, and Anjela Bubiy for ECE 3330.
+The project objective was to create a chat application in Java that met the following requirements:
+* supports channels - chats with more than 2 users
+* stores information of chat history so that users may access old history
+* allows for many users to be a part of the same application/server
+* allows for live chat between users
+
+From Friday, Dec 1 to Monday, Dec 4 we created a Java application called Party Parrot Party Chat App to facilitate
+group chats and private messages between users of this application.
+
+We primarily utilized the Model-View-Controller paradigm to build our application using JavaFX on the front end with CSS style sheets.
+My contribution to this project was to create the Controllers and integrate the controllers functionality with specific views that
+the user would see with a given action. I also helped connect the controllers with the models that Chris wrote. 
+
+The controllers have a polymorphic inheritance structure so that new views and controllers could be implemented or imported with 
+ease into the application - allowing for a more extensive and user friendly experience. These controllers were responsible for a responsive
+Java application so the user would be able to use the chat service with little work on their part. Additionally, the controllers
+and views should be intuitive for users to utilize - no or little explanation necessary.
+
+In the future, to improve this program, I would give the controllers a stronger hierarchy, forcing them to implement a thread to listen for
+messages that the user may receive from other channels and also improve the way various UI structures were imported into the application.
+This would allow the developers to make small fixes and improve overall experience without lengthy time spent re-doing the project. It 
+would also ease the user to new changes, as the fixes would not largely change the structure or models defined in the application.
