@@ -355,12 +355,14 @@ public class Server extends JFrame {
          */
         private ArrayList<String> fileToArray(String fileName){
             ArrayList<String> entries = new ArrayList<>();
+            entries.add("IGNORE");
+            entries.remove("IGNORE");
             displayMessage("fileToArray: Made arraylist\n");
             try {
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(".\\shared\\src\\"+fileName));
                 displayMessage("fileToArray: Made bufferedReader\n");
                 String line = bufferedReader.readLine();
-                while (line != null) {
+                while (line != null && !line.equals("")) {
                     entries.add(line);
                     line = bufferedReader.readLine();
                 }
