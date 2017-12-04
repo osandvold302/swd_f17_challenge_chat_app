@@ -26,6 +26,8 @@ public class MessageController extends GeneralController {
     @FXML
     private static Label channelNameLabel;
 
+    private static boolean onMessages = true;
+
     /** static function will set all the messages from the past conversations   */
     public static void initMessages(){
         getClient().requestMessageHistory(getClient().getCurrentChannel());
@@ -43,6 +45,13 @@ public class MessageController extends GeneralController {
         }
 
         channelNameLabel.setText(getClient().getCurrentChannel());
+
+        while(onMessages){
+            String text = getClient().receiveMessage();
+            if(text!=null && !text.substring(0,11).equals("NEWCHANNEL:")){
+                addMessages(text);
+            }
+        }
     }
 
     /** this function will send the message the user types after they press enter to the server
@@ -52,7 +61,7 @@ public class MessageController extends GeneralController {
     private void messageListenerText(ActionEvent event){
         String message = textMessageField.getText();
 
-        getClient().sendMessage(message);
+        getClient().sendMessage(getClient().getID() + " >> " +message);
 
         textMessageField.setText("");
     }
@@ -64,20 +73,26 @@ public class MessageController extends GeneralController {
     private void messageListenerButton(ActionEvent event){
         String message = textMessageField.getText();
 
-        getClient().sendMessage(message);
+        getClient().sendMessage(getClient().getID() + " >> " +message);
 
         textMessageField.setText("");
     }
 
     @FXML
     private void setBackToMenu(ActionEvent event){
+        onMessages = false;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
+        MenuController.initMenu();
         try{
             Parent root = (Parent)loader.load();
             getStage().setScene(new Scene(root));
         }catch(IOException err){
             err.printStackTrace();
         }
+    }
+
+    private static void addMessages(String message){
+        messageDispArea.getChildren().add(new Label(getClient().getID()+" >> "+message));
     }
 
 }

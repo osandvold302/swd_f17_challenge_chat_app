@@ -118,21 +118,22 @@ public class User {
         try {
             //Get information from the server and find out what group and user it is from
             Message message = (Message) input.readObject();
-            if(message instanceof RequestFulfillment){
+            if(message instanceof RequestFulfillment){  // request was successful
                 String channel = ((RequestFulfillment) message).getChannel();
                 if(channelExists(channel)){
                     return "REQUEST:"+((RequestFulfillment)message).getText();
                 } else{
-                    channels.add(channel);
+                    channels.add(channel); // add channels to their list
+                    changeChannel(channel);
                     return "NEWCHANNEL:"+((RequestFulfillment) message).getText();
                 }
 
-            } else if(message instanceof TextMessage){
+            } else if(message instanceof TextMessage){  // sending a message to someone else
                 String channel = ((TextMessage) message).getChannel();
                 if(channel.equals(currentChannel)){
                     return ((TextMessage) message).getUser()+" >> "+((TextMessage)message).getMessage();
                 }
-                if(!channelExists(channel)){
+                if(!channelExists(channel)){    // channel does not exist in their list
                     return "Channel already exists!";
                 }
             }
@@ -141,7 +142,7 @@ public class User {
         }catch(ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
-        return "";
+        return "";  // return an empty string
     }
 
     /** getter for the channels the user is a part of
@@ -171,6 +172,9 @@ public class User {
         return currentChannel;
     }
 
+    /** this function returns the ID the user has
+     * @return string representation of user ID
+     */
     public String getID(){
         return ID;
     }
