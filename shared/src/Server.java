@@ -207,6 +207,7 @@ public class Server extends JFrame {
                 }
                 builder.append("\n");
                 bufferedWriter.write(builder.toString());
+                bufferedWriter.close();
             }catch(IOException ioe){
                 ioe.printStackTrace();
             }
@@ -232,6 +233,7 @@ public class Server extends JFrame {
                 for(String e:entries){//Rewrite the file with the new message appended
                     writer.write(e+"\n");
                 }
+                writer.close();
             } catch(IOException ioe){
                 ioe.printStackTrace();
             }

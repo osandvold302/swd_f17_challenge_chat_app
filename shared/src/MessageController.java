@@ -32,7 +32,7 @@ public class MessageController extends GeneralController {
     /** static function will set all the messages from the past conversations   */
     @FXML
     public void initialize(){
-        getClient().requestMessageHistory(getClient().getCurrentChannel());
+        /*getClient().requestMessageHistory(getClient().getCurrentChannel());
 
         // client would listen for all of the messages to come to the screen
         String requestAllMessages = getClient().receiveMessage();
@@ -53,7 +53,9 @@ public class MessageController extends GeneralController {
             if(text!=null && !text.substring(0,11).equals("NEWCHANNEL:")){
                 addMessages(text);
             }
-        }
+        }*/
+        messageDispArea.setText("Fuck");
+        channelNameLabel.setText(getClient().getCurrentChannel());
     }
 
     /** this function will send the message when the user presses the send button or presses enter
@@ -63,7 +65,7 @@ public class MessageController extends GeneralController {
     private void messageListenerButton(ActionEvent event){
         String message = textFieldMessages.getText();
 
-        getClient().sendMessage(getClient().getID() + " >> " +message);
+        getClient().sendMessage(getClient().getID() + " >> " +message+"\n");
         addMessages(message);
 
         textFieldMessages.setText("");
@@ -82,7 +84,7 @@ public class MessageController extends GeneralController {
     }
 
     private void addMessages(String message){
-        messageDispArea.appendText(getClient().getID()+" >> "+message);
+        messageDispArea.appendText(getClient().getID()+" >> "+message+"\n");
     }
 
 }

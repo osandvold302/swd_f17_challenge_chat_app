@@ -11,14 +11,9 @@ import java.io.IOException;
 
 /** this class is the controller for the view to create a new channel*/
 public class NewChannelController extends GeneralController {
-    /** the user who is creating the new channel*/
-    private String username;
     /** this field stores the reference to the text field object the user writes their channel name in*/
     @FXML
     private TextField channelNameField;
-    /** this field stores the reference to the button the user presses to create a channel*/
-    @FXML
-    private Button createChannelButton;
     /** this field stores the list of users the client wants to add to a channel*/
     @FXML
     private TextArea usernameField;
@@ -64,6 +59,7 @@ public class NewChannelController extends GeneralController {
             if(!message.isEmpty()&&message.substring(0,11).equals("NEWCHANNEL:")){
                 getClient().changeChannel(channel);
                 determined = true;
+                MessageController.setClient(getClient());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
                 try{
                     Parent root = (Parent)loader.load();
@@ -71,7 +67,7 @@ public class NewChannelController extends GeneralController {
                 }catch(IOException err){
                     err.printStackTrace();
                 }
-                MessageController.setClient(getClient());
+
             }
         }
     }
