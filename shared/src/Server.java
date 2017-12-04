@@ -173,6 +173,7 @@ public class Server extends JFrame {
                             addChannel(channel, users);
                             for (String eachUser : users) {
                                 SockServer serverSocket = outputs.get(eachUser);
+                                addChannelToUser(eachUser,channel);
                                 System.out.println(eachUser);
                                 if (serverSocket!=null) {
                                     ObjectOutputStream out = serverSocket.getOutput();
@@ -222,12 +223,17 @@ public class Server extends JFrame {
         private void addMessage(String channel, String user, String message){
             try {//Read each line and store it
                 ArrayList<String> entries = fileToArray("Channel-Log.csv");
+                boolean done = false;
                 for(int i=0; i<entries.size(); i++) {//If the line is that of the channel, append the message
                     Scanner lineReader = new Scanner(entries.get(i));
                     lineReader.useDelimiter(",");
                     if(lineReader.next().equals(channel)){
                         entries.set(i,entries.get(i)+user+" >> "+message+",");
+                        done = true;
                     }
+                }
+                if(!done){
+                    entries.add(channel+",");
                 }
                 BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
                 for(String e:entries){//Rewrite the file with the new message appended
@@ -258,6 +264,37 @@ public class Server extends JFrame {
                     }
                 }
             return null;
+        }
+
+        /**
+         * Adds the channel to the list of channels the user is a part of.
+         * If the user is new, create a new user and assign it that channel.
+         * @param user user getting assigned the channel
+         * @param channel channel being assigned to the user
+         */
+        private void addChannelToUser(String user, String channel){
+            try {//Read each line and store it
+                ArrayList<String> entries = fileToArray("User-Channel.csv");
+                boolean done = false;
+                for(int i=0; i<entries.size(); i++) {//If the line is that of the channel, append the message
+                    Scanner lineReader = new Scanner(entries.get(i));
+                    lineReader.useDelimiter(",");
+                    if(lineReader.next().equals(user)){
+                        entries.set(i,entries.get(i)+channel+",");
+                        done = true;
+                    }
+                }
+                if(!done){
+                    entries.add(user+","+channel+",");
+                }
+                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
+                for(String e:entries){//Rewrite the file with the new message appended
+                    writer.write(e+"\n");
+                }
+                writer.close();
+            } catch(IOException ioe){
+                ioe.printStackTrace();
+            }
         }
 
         /**
