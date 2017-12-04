@@ -54,10 +54,6 @@ public class User {
         this.ID = ID;   // set ID
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6958bff92abaf4fa504997b398cd78356f166212
     /** send a message from the current channel
      * @param message what the user is trying to send
      */
