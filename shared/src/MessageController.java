@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -15,7 +16,7 @@ public class MessageController extends GeneralController {
 
     /** this is where all of the messages will be printed*/
     @FXML
-    private static VBox messageDispArea;
+    private static TextArea messageDispArea;
     /** field where user types their information*/
     @FXML
     private TextField textMessageField;
@@ -41,7 +42,7 @@ public class MessageController extends GeneralController {
 
         Scanner splitter = new Scanner(requestAllMessages);
         while(splitter.hasNext()){
-            messageDispArea.getChildren().add(new Label(splitter.nextLine()));
+            messageDispArea.appendText(splitter.nextLine());
         }
 
         channelNameLabel.setText(getClient().getCurrentChannel());
@@ -80,7 +81,7 @@ public class MessageController extends GeneralController {
     }
 
     private static void addMessages(String message){
-        messageDispArea.getChildren().add(new Label(getClient().getID()+" >> "+message));
+        messageDispArea.appendText(getClient().getID()+" >> "+message);
     }
 
 }
