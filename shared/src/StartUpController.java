@@ -78,13 +78,10 @@ public class StartUpController extends GeneralController {
      */
     public boolean isValidUser(String username) {
         if(username.contains(",")){
-            System.out.println("Username contains comma");
             return false;
         }else if(username.contains(" ")){
-            System.out.println("Username contains space");
             return false;
         }else {
-            System.out.println("User name is valid");
             return true;
         }
     }

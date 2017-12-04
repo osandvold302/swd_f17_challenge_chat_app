@@ -28,10 +28,8 @@ public class MenuController extends GeneralController {
                 @Override
                 public void handle(ActionEvent event) {
                     String channelName = ((Button) event.getSource()).getText();
-                    System.out.println("Button pressed: " +channelName);
                     getClient().changeChannel(channelName);
                     MessageController.setClient(getClient());
-                    System.out.println("Before loading new view");
 
                     // change view
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));

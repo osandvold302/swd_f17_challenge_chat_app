@@ -42,11 +42,8 @@ public class NewChannelController extends GeneralController {
     @FXML
     public void setUpNewChannel(ActionEvent makeNewChannel){
         String channel = channelNameField.getText();
-        System.out.printf("the number of names is : %d\t the \n",getListOfNames(usernameField.getText()).length);
         User user = getClient();
-        System.out.println(user.toString()+" before");
         user.newChannel(channel,getListOfNames(usernameField.getText()));
-        System.out.println(user.toString()+" after");
         boolean determined = false; // determine if we have gotten an existing channel
         while(!determined){ // we don't know if channel exists
             String message = getClient().receiveMessage();  // wait for output.flush message

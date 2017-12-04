@@ -37,9 +37,6 @@ public class User {
             output.flush(); // send the user ID to the server
             input = new ObjectInputStream(client.getInputStream());
             channelList = (String[])input.readObject(); // get channels from server
-            for(String channel : channelList){
-                System.out.println("The channels are:"+channel);
-            }
             executor = Executors.newCachedThreadPool();
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
@@ -165,9 +162,6 @@ public class User {
      * @return the arraylist of channels the user is a part of
      */
     public ArrayList<String> getChannels(){
-        for(String channel:channels){
-            System.out.println("The channel array list in user contains: "+channel);
-        }
         return channels;
     }
 
