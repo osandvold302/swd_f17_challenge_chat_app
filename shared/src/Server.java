@@ -199,7 +199,7 @@ public class Server extends JFrame {
          */
         private void addChannel(String channel, String[] users){
             try {//Write to the end of the file a new line containing the name of the channel and all of the users
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".\\shared\\src\\Client-User.csv", true));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-User.csv", true));
                 StringBuilder builder = new StringBuilder();
                 builder.append(channel);
                 for(int i=0; i<users.length; i++){
