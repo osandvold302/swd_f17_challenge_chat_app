@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
@@ -82,6 +83,9 @@ public class MessageController extends GeneralController {
         messageDispArea.appendText(message+"\n");
     }
 
+    private void listen(MouseDragEvent mouseEntered){
+        
+    }
     private class listeningThread implements Runnable{
         @Override
         public void run() {
