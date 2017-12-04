@@ -20,9 +20,6 @@ public class MessageController extends GeneralController {
     /** field where user types their information*/
     @FXML
     private TextField textFieldMessages;
-    /** button to bring back to menu*/
-    @FXML
-    private Button backToMenu;
     /** the name of the channel*/
     @FXML
     private Label channelNameLabel;
@@ -71,6 +68,9 @@ public class MessageController extends GeneralController {
         textFieldMessages.setText("");
     }
 
+    /** this function will send the user back to the menu
+     * @param event pressing the back button
+     */
     @FXML
     private void setBackToMenu(ActionEvent event){
         onMessages = false;
@@ -83,6 +83,9 @@ public class MessageController extends GeneralController {
         }
     }
 
+    /** function to add messages to the text area
+     * @param message to send
+     */
     private void addMessages(String message){
         messageDispArea.appendText(getClient().getID()+" >> "+message+"\n");
     }
