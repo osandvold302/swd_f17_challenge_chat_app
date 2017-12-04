@@ -54,19 +54,7 @@ public class MessageController extends GeneralController {
         }
     }
 
-    /** this function will send the message the user types after they press enter to the server
-     * @param event the enter key being pressed
-     */
-    @FXML
-    private void messageListenerText(ActionEvent event){
-        String message = textMessageField.getText();
-
-        getClient().sendMessage(getClient().getID() + " >> " +message);
-
-        textMessageField.setText("");
-    }
-
-    /** this function will send the message when the user presses the send button
+    /** this function will send the message when the user presses the send button or presses enter
      * @param event the button being pressed
      */
     @FXML
