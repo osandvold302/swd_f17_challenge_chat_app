@@ -19,7 +19,7 @@ public class MessageController extends GeneralController {
     private static TextArea messageDispArea;
     /** field where user types their information*/
     @FXML
-    private TextField textMessageField;
+    private TextField textFieldMessages;
     /** button to bring back to menu*/
     @FXML
     private Button backToMenu;
@@ -60,11 +60,12 @@ public class MessageController extends GeneralController {
      */
     @FXML
     private void messageListenerButton(ActionEvent event){
-        String message = textMessageField.getText();
+        String message = textFieldMessages.getText();
 
         getClient().sendMessage(getClient().getID() + " >> " +message);
+        addMessages(message);
 
-        textMessageField.setText("");
+        textFieldMessages.setText("");
     }
 
     @FXML
