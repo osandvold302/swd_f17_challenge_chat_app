@@ -23,8 +23,8 @@ public class MenuController extends GeneralController {
     @FXML
     public void initialize(){
         // get the channels for the user
-        getChannels();
-        for(String channel : channels){ // try to add all the buttons for the channels
+        //getChannels();
+        for(String channel : getClient().getChannels()){ // try to add all the buttons for the channels
             Button channelDisp = new Button(channel);
             channelDisp.setOnAction(new EventHandler<ActionEvent>() {
                 @Override

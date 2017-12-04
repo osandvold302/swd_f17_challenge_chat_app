@@ -44,6 +44,7 @@ public class StartUpController extends GeneralController {
         FXMLLoader loader;
         // channels exist for user
         if(!channels.isEmpty()){
+            MenuController.setClient(newUser);
             // change view to menu view
             loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
             try{
@@ -51,18 +52,15 @@ public class StartUpController extends GeneralController {
                 getStage().setScene(new Scene(root));
             }catch(IOException err){
                 err.printStackTrace();
-            }finally {
-                MenuController.setClient(newUser);
             }
         }else{    // they don't have channels - set up the create channel view
+            NewChannelController.setClient(newUser);
             loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
             try{
                 Parent root = (Parent)loader.load();
                 getStage().setScene(new Scene(root));
             }catch(IOException err){
                 err.printStackTrace();
-            }finally {
-                NewChannelController.setClient(newUser);
             }
         }
     }

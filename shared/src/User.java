@@ -24,7 +24,7 @@ public class User {
      * @param ID unique identifier
      */
     public User(String ID){
-        String[] channelList = null;
+        String[] channelList=null;
         try{
             // local host - where the server is already running
             client = new Socket(InetAddress.getByName("127.0.0.1"), 23555);
@@ -33,6 +33,9 @@ public class User {
             output.flush(); // send the user ID to the server
             input = new ObjectInputStream(client.getInputStream());
             channelList = (String[])input.readObject(); // get channels from server
+            for(String channel : channelList){
+                System.out.println("The channels are:"+channel);
+            }
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
         } catch (IOException ioe) {
@@ -41,8 +44,12 @@ public class User {
             cnfe.printStackTrace();
         }
         channels = new ArrayList<>();   // give memory to a new channel list
-        for(int i=0; i<channelList.length; i++){
-            channels.add(channelList[i]);
+        channels.add("IGNORE");
+        channels.remove("IGNORE");
+        if(channelList != null) {
+            for (int i = 0; i < channelList.length; i++) {
+                channels.add(channelList[i]);
+            }
         }
         System.out.println("User created with "+channels.size()+" channels.");
         this.ID = ID;   // set ID
@@ -146,6 +153,9 @@ public class User {
      * @return the arraylist of channels the user is a part of
      */
     public ArrayList<String> getChannels(){
+        for(String channel:channels){
+            System.out.println("The channel array list in user contains: "+channel);
+        }
         return channels;
     }
 

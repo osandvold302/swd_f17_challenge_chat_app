@@ -339,7 +339,7 @@ public class Server extends JFrame {
                             }
                             String[] userArray = new String[users.size()];
                             for (int i = 0; i < userArray.length; i++) {//Switch all of the values from the arraylist to an array
-                                userArray[i] = entries.get(i);
+                                userArray[i] = users.get(i);
                             }
                             displayMessage("getListFromFile: The file had contents and is returning a nonempty array.\n");
                             return userArray;
