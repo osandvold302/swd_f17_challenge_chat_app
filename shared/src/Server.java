@@ -228,12 +228,12 @@ public class Server extends JFrame {
                     Scanner lineReader = new Scanner(entries.get(i));
                     lineReader.useDelimiter(",");
                     if(lineReader.next().equals(channel)){
-                        entries.set(i,entries.get(i)+user+" >> "+message+",");
+                        entries.set(i,entries.get(i)+user+" >> "+message);
                         done = true;
                     }
                 }
                 if(!done){
-                    entries.add(channel+",");
+                    entries.add(channel+","+user+" >> "+message);
                 }
                 BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
                 for(String e:entries){//Rewrite the file with the new message appended
@@ -287,7 +287,7 @@ public class Server extends JFrame {
                 if(!done){
                     entries.add(user+","+channel+",");
                 }
-                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\User-Channel.csv"));
                 for(String e:entries){//Rewrite the file with the new message appended
                     writer.write(e+"\n");
                 }
