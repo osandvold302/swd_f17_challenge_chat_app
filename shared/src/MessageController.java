@@ -74,6 +74,21 @@ public class MessageController extends GeneralController {
         }
     }
 
+    @FXML
+    private void refreshView(ActionEvent event){
+        getClient().requestMessageHistory(getClient().getCurrentChannel());
+
+        String requestAllMessages = getClient().receiveMessage();
+        while(!requestAllMessages.substring(0,8).equals("REQUEST:")){
+            requestAllMessages = getClient().receiveMessage();
+        }
+        if(requestAllMessages.length()>8 && requestAllMessages.contains(getClient().getCurrentChannel())){
+            requestAllMessages = requestAllMessages.substring(8+getClient().getCurrentChannel().length()); // trim REQUEST:
+            requestAllMessages=requestAllMessages.replace("\\n","\n");
+            messageDispArea.setText(requestAllMessages);
+        }
+    }
+
     /** function to add messages to the text area
      * @param message to send
      */

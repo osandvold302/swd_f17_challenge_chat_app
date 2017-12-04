@@ -19,6 +19,6 @@
                     <VBox fx:id="messageDispArea" prefHeight="515.0" prefWidth="396.0" />
                 </content>
             </ScrollPane>
-      <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#newChannel" text="New Channel" />
+      <Button layoutX="14.0" layoutY="2.0" mnemonicParsing="false" onAction="#newChannel" text="New Channel" />
     </children>
 </AnchorPane>
