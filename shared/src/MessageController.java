@@ -26,13 +26,14 @@ public class MessageController extends GeneralController {
     @FXML
     private Label channelNameLabel;
 
-    private boolean onMessages = true;
+    private boolean onMessages;
 
     /** static function will set all the messages from the past conversations   */
     @FXML
     public void initialize(){
         messageDispArea.setText(" ");
         channelNameLabel.setText(getClient().getCurrentChannel());
+        onMessages = true;
 
         // client would listen for all of the messages to come to the screen
         String requestAllMessages = getClient().receiveMessage();
@@ -86,13 +87,7 @@ public class MessageController extends GeneralController {
 
     @FXML
     private void listen(MouseEvent mouseEntered){
-        while(onMessages){
-            String text = getClient().receiveMessage();
-            if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
-                addMessages(text);
-            }
-        }
-        //getClient().execute(new listeningThread());
+        getClient().execute(new listeningThread());
     }
     private class listeningThread implements Runnable{
         @Override
