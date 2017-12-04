@@ -1,5 +1,3 @@
-chris,friends,
-kevin,friends,
-alex,friends,
-harsh,friends,
-olivia,friends,
+chris,swdteam,
+anjela,swdteam,
+olivia,swdteam,
