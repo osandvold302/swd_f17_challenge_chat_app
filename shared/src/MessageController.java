@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
@@ -43,7 +44,7 @@ public class MessageController extends GeneralController {
             requestAllMessages=requestAllMessages.replace("\\n","\n");
             messageDispArea.setText(requestAllMessages);
         }
-        getClient().execute(new listeningThread());
+
     }
 
     /** this function will send the message when the user presses the send button or presses enter
@@ -83,8 +84,15 @@ public class MessageController extends GeneralController {
         messageDispArea.appendText(message+"\n");
     }
 
-    private void listen(MouseDragEvent mouseEntered){
-        
+    @FXML
+    private void listen(MouseEvent mouseEntered){
+        while(onMessages){
+            String text = getClient().receiveMessage();
+            if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
+                addMessages(text);
+            }
+        }
+        //getClient().execute(new listeningThread());
     }
     private class listeningThread implements Runnable{
         @Override
