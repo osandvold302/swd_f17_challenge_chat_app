@@ -1,3 +1,6 @@
+/** ANJELA STARTED DOCS FOR THIS FILE
+ *
+ */
 public class MessageToClient extends Message {
     private String channel;
     private String text;
