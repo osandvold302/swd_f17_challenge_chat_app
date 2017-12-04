@@ -10,7 +10,8 @@ group chats and private messages between users of this application.
 
 We primarily utilized the Model-View-Controller paradigm to build our application using JavaFX on the front end with CSS style sheets.
 My contribution to this project was to create the Controllers and integrate the controllers functionality with specific views that
-the user would see with a given action. I also helped connect the controllers with the models that Chris wrote. 
+the user would see with a given action. I also helped connect the controllers with the models that Chris wrote. I wrote all the controllers
+for each of our four views the user could interact with. I also rebuilt the FXML views to enhance user experience.
 
 The controllers have a polymorphic inheritance structure so that new views and controllers could be implemented or imported with 
 ease into the application - allowing for a more extensive and user friendly experience. These controllers were responsible for a responsive
@@ -20,4 +21,6 @@ and views should be intuitive for users to utilize - no or little explanation ne
 In the future, to improve this program, I would give the controllers a stronger hierarchy, forcing them to implement a thread to listen for
 messages that the user may receive from other channels and also improve the way various UI structures were imported into the application.
 This would allow the developers to make small fixes and improve overall experience without lengthy time spent re-doing the project. It 
-would also ease the user to new changes, as the fixes would not largely change the structure or models defined in the application.
+would also ease the user to new changes, as the fixes would not largely change the structure or models defined in the application. I would
+definitely make changes to the UI and maybe target the chat server towards kids by adding other features that would pop up
+or change depending on the users' actions.
