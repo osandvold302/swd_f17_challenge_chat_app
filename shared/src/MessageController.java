@@ -16,7 +16,7 @@ public class MessageController extends GeneralController {
 
     /** this is where all of the messages will be printed*/
     @FXML
-    private static TextArea messageDispArea;
+    private TextArea messageDispArea;
     /** field where user types their information*/
     @FXML
     private TextField textFieldMessages;
@@ -25,12 +25,13 @@ public class MessageController extends GeneralController {
     private Button backToMenu;
     /** the name of the channel*/
     @FXML
-    private static Label channelNameLabel;
+    private Label channelNameLabel;
 
-    private static boolean onMessages = true;
+    private boolean onMessages = true;
 
     /** static function will set all the messages from the past conversations   */
-    public static void initMessages(){
+    @FXML
+    public void initialize(){
         getClient().requestMessageHistory(getClient().getCurrentChannel());
 
         // client would listen for all of the messages to come to the screen
@@ -72,7 +73,6 @@ public class MessageController extends GeneralController {
     private void setBackToMenu(ActionEvent event){
         onMessages = false;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
-        MenuController.initMenu();
         try{
             Parent root = (Parent)loader.load();
             getStage().setScene(new Scene(root));
@@ -81,7 +81,7 @@ public class MessageController extends GeneralController {
         }
     }
 
-    private static void addMessages(String message){
+    private void addMessages(String message){
         messageDispArea.appendText(getClient().getID()+" >> "+message);
     }
 

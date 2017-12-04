@@ -17,11 +17,8 @@ public class MenuController extends GeneralController {
     private static VBox messageDispArea;
     private static ArrayList<String> channels;
 
-    private static void getChannels(){
-        channels = getClient().getChannels();
-    }
-
-    public static void initMenu(){
+    @FXML
+    public void initialize(){
         getChannels();
         for(String channel : channels){
             Button channelDisp = new Button(channel);
@@ -39,6 +36,9 @@ public class MenuController extends GeneralController {
             });
             messageDispArea.getChildren().add(new Button(channel));
         }
+    }
+    private static void getChannels(){
+        channels = getClient().getChannels();
     }
 
 
