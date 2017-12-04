@@ -13,14 +13,18 @@ import java.util.ArrayList;
 /** this controller will be in control fo the "menuView.fxml" view
  */
 public class MenuController extends GeneralController {
+    /** this reference to the display area where channels will appear*/
     @FXML
     private VBox messageDispArea;
+    /** this reference is to the channels the user is in*/
     private ArrayList<String> channels;
 
+    /** called when FXMLLoader loads*/
     @FXML
     public void initialize(){
+        // get the channels for the user
         getChannels();
-        for(String channel : channels){
+        for(String channel : channels){ // try to add all the buttons for the channels
             Button channelDisp = new Button(channel);
             channelDisp.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -39,13 +43,19 @@ public class MenuController extends GeneralController {
                     }
                 }
             });
+            // add buttons to the VBox
             messageDispArea.getChildren().add(new Button(channel));
         }
     }
+
+    /** getters for channels user is in */
     private void getChannels(){
         channels = getClient().getChannels();
     }
 
+    /** listener for when the user presses the create new channel button
+     * @param event user presses button
+     */
     @FXML
     private void newChannel(ActionEvent event){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("createChannelView.fxml"));
