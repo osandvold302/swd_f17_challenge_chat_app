@@ -84,20 +84,4 @@ public class MessageController extends GeneralController {
     private void addMessages(String message){
         messageDispArea.appendText(message+"\n");
     }
-
-    @FXML
-    private void listen(MouseEvent mouseEntered){
-        getClient().execute(new listeningThread());
-    }
-    private class listeningThread implements Runnable{
-        @Override
-        public void run() {
-            while(onMessages){
-                String text = getClient().receiveMessage();
-                if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
-                    addMessages(text);
-                }
-            }
-        }
-    }
 }
