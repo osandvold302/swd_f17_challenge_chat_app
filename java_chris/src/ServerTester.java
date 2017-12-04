@@ -3,6 +3,9 @@
 
 import javax.swing.*;
 
+/**
+ * driver to test the server
+ */
 public class ServerTester {
     public static void main(String[] args) {
         Server application = new Server(); // create server
