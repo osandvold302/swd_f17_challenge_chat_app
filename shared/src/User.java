@@ -5,6 +5,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class User {
     /** this is a stream that the user will write to when they send messages to a channel*/
@@ -19,6 +21,8 @@ public class User {
     private final ArrayList<String> channels;
     /** this is the user's unique ID*/
     private final String ID;
+    /** this executor will control all the messages that come to the user*/
+    private ExecutorService executor;
 
     /** default constructor for User object
      * @param ID unique identifier
@@ -36,6 +40,7 @@ public class User {
             for(String channel : channelList){
                 System.out.println("The channels are:"+channel);
             }
+            executor = Executors.newCachedThreadPool();
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
         } catch (IOException ioe) {
@@ -55,15 +60,10 @@ public class User {
         this.ID = ID;   // set ID
     }
 
-    public void runUser(){
-
+    public void execute(Runnable thread){
+        executor.execute(thread);
     }
 
-    private class UserListener implements Runnable{
-        public void run(){
-
-        }
-    }
     /** send a message from the current channel
      * @param message what the user is trying to send
      */
@@ -176,6 +176,7 @@ public class User {
         try {
             output.writeObject(new TextMessage("","","TERMINATE"));
             output.flush();
+            executor.shutdown();
             output.close();
             input.close();
             client.close();

@@ -42,12 +42,7 @@ public class MessageController extends GeneralController {
             requestAllMessages=requestAllMessages.replace("\\n","\n");
             messageDispArea.setText(requestAllMessages);
         }
-//        while(onMessages){
-//            String text = getClient().receiveMessage();
-//            if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
-//                addMessages(text);
-//            }
-//        }
+        getClient().execute(new listeningThread());
     }
 
     /** this function will send the message when the user presses the send button or presses enter
@@ -87,4 +82,15 @@ public class MessageController extends GeneralController {
         messageDispArea.appendText(message+"\n");
     }
 
+    private class listeningThread implements Runnable{
+        @Override
+        public void run() {
+            while(onMessages){
+                String text = getClient().receiveMessage();
+                if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
+                    addMessages(text);
+                }
+            }
+        }
+    }
 }
