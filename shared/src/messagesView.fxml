@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="titleAnchorMessaging" prefHeight="555.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MessageController">
+<AnchorPane fx:id="titleAnchorMessaging" prefHeight="555.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MessageController">
    <children>
       <TitledPane fx:id="titlePaneMessaging" animated="false" layoutX="39.0" layoutY="14.0" onMouseMoved="#listen" prefHeight="555.0" prefWidth="398.0" text="Party Parrot Party Chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <content>
