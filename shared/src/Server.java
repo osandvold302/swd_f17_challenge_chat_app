@@ -140,10 +140,12 @@ public class Server extends JFrame {
                 try{
                     //Get information from the server and find out what group and user it is from
                     MessageToServer message = (MessageToServer) input.readObject();
+                    System.out.println("received message, what type  of message");
                     if(message instanceof RequestMessage){//If the user wants message history
                         String channel = message.getChannel();
                         output.writeObject(new RequestFulfillment(channel,getConversationHistory(channel)));
                         output.flush();
+                        displayMessage("Sent request fulfillment.");
                     } else if(message instanceof TextMessage){//If the user is sending a message to a channel
                         String channel = message.getChannel();
                         String user = ((TextMessage) message).getUser();
@@ -159,24 +161,29 @@ public class Server extends JFrame {
                                     ObjectOutputStream out = serverOut.getOutput();
                                     out.writeObject(new TextMessage(channel, user, text));
                                     out.flush();
+                                    displayMessage("Sent text message");
                                 }
                             }
                         }
                     } else if(message instanceof NewChannelMessage){//If the user wants to make a new channel
+                        System.out.println("got new channel message");
                         String channel = message.getChannel();
                         String[] users = ((NewChannelMessage) message).getUsers();
                         if(!channelExists(channel)){
                             addChannel(channel, users);
                             for (String eachUser : users) {
                                 SockServer serverSocket = outputs.get(eachUser);
+                                System.out.println(eachUser);
                                 if (serverSocket!=null) {
                                     ObjectOutputStream out = serverSocket.getOutput();
                                     out.writeObject(new RequestFulfillment(channel, "You've been added to a new Channel!"));
                                     out.flush();
+                                    displayMessage("Send new channel message");
                                 }
                             }
                         }else{//If the channel already exists
                             output.writeObject(new TextMessage(channel, "","Channel already exists."));
+                            output.flush();
                         }
                     }
                 } catch (ClassNotFoundException classNotFoundException) {

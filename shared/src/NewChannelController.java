@@ -15,13 +15,13 @@ public class NewChannelController extends GeneralController {
     private String username;
     /** this field stores the reference to the text field object the user writes their channel name in*/
     @FXML
-    private TextField channelName;
+    private TextField channelNameField;
     /** this field stores the reference to the button the user presses to create a channel*/
     @FXML
     private Button createChannelButton;
     /** this field stores the list of users the client wants to add to a channel*/
     @FXML
-    private TextArea usersList;
+    private TextArea usernameField;
 
     /** will return an array of the list of users to add to the channel
      * @param nameListWithCommas a string with all the names of the users to add in a channel
@@ -33,7 +33,7 @@ public class NewChannelController extends GeneralController {
            names[0] = "";
            return names;    // return nothing
         }
-        nameListWithCommas+= " ," + username;
+        nameListWithCommas+= " ," + getClient().getID();
         String[] names = nameListWithCommas.split(",");
         for(int i=0;i<names.length;i++){
             names[i] = names[i].trim(); // get rid of the whitespace
@@ -46,17 +46,22 @@ public class NewChannelController extends GeneralController {
      */
     @FXML
     public void setUpNewChannel(ActionEvent makeNewChannel){
-        String channel = channelName.getText();
-        getClient().newChannel(channel,getListOfNames(usersList.getText()));
+        String channel = channelNameField.getText();
+        System.out.printf("the number of names is : %d\t the \n",getListOfNames(usernameField.getText()).length);
+        User user = getClient();
+        System.out.println(user.toString()+" before");
+        user.newChannel(channel,getListOfNames(usernameField.getText()));
+        System.out.println(user.toString()+" after");
         boolean determined = false;
         while(!determined){
             String message = getClient().receiveMessage();
+            System.out.println(message);
             if(message.equals("Channel already exists!")){
-                channelName.setStyle("-fx-text-inner-color: red;");
-                channelName.setText("This channel already exists :(");
+                channelNameField.setStyle("-fx-text-inner-color: red;");
+                channelNameField.setText("This channel already exists :(");
                 determined = true;
             }
-            if(message.substring(0,11).equals("NEWCHANNEL:")){
+            if(!message.isEmpty()&&message.substring(0,11).equals("NEWCHANNEL:")){
                 getClient().changeChannel(channel);
                 determined = true;
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));

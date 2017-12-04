@@ -68,9 +68,11 @@ public class User {
      * @return whether they were successful in adding a channel
      */
     public void newChannel(String channel,String[] users){
+        System.out.println("entering new channel request");
         try {
             output.writeObject(new NewChannelMessage(channel, users));
             output.flush();
+            System.out.println("finished flushing new channel request");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -139,7 +141,7 @@ public class User {
         }catch(ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     /** getter for the channels the user is a part of
@@ -167,5 +169,9 @@ public class User {
      */
     public String getCurrentChannel() {
         return currentChannel;
+    }
+
+    public String getID(){
+        return ID;
     }
 }
