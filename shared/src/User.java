@@ -21,8 +21,6 @@ public class User {
     private final ArrayList<String> channels;
     /** this is the user's unique ID*/
     private final String ID;
-    /** this executor will control all the messages that come to the user*/
-    private ExecutorService executor;
 
     /** default constructor for User object
      * @param ID unique identifier
@@ -37,7 +35,6 @@ public class User {
             output.flush(); // send the user ID to the server
             input = new ObjectInputStream(client.getInputStream());
             channelList = (String[])input.readObject(); // get channels from server
-            executor = Executors.newCachedThreadPool();
         } catch (UnknownHostException uhe) {
             uhe.printStackTrace();
         } catch (IOException ioe) {
@@ -55,10 +52,6 @@ public class User {
         }
         System.out.println("User created with "+channels.size()+" channels.");
         this.ID = ID;   // set ID
-    }
-
-    public void execute(Runnable thread){
-        executor.execute(thread);
     }
 
     /** send a message from the current channel
@@ -134,7 +127,7 @@ public class User {
                     if(((RequestFulfillment) message).getText()==null){
                         return "REQUEST:";
                     }
-                    return "REQUEST:"+((RequestFulfillment)message).getText();
+                    return "REQUEST:"+channel+((RequestFulfillment)message).getText();
                 } else{
                     channels.add(channel); // add channels to their list
                     changeChannel(channel);
@@ -170,7 +163,6 @@ public class User {
         try {
             output.writeObject(new TextMessage("","","TERMINATE"));
             output.flush();
-            executor.shutdown();
             output.close();
             input.close();
             client.close();

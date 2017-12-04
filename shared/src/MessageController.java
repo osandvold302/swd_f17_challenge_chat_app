@@ -26,22 +26,19 @@ public class MessageController extends GeneralController {
     @FXML
     private Label channelNameLabel;
 
-    private boolean onMessages;
-
     /** static function will set all the messages from the past conversations   */
     @FXML
     public void initialize(){
         messageDispArea.setText(" ");
         channelNameLabel.setText(getClient().getCurrentChannel());
-        onMessages = true;
 
         // client would listen for all of the messages to come to the screen
         String requestAllMessages = getClient().receiveMessage();
         while(!requestAllMessages.substring(0,8).equals("REQUEST:")){
             requestAllMessages = getClient().receiveMessage();
         }
-        if(requestAllMessages.length()>8){
-            requestAllMessages = requestAllMessages.substring(8); // trim REQUEST:
+        if(requestAllMessages.length()>8 && requestAllMessages.contains(getClient().getCurrentChannel())){
+            requestAllMessages = requestAllMessages.substring(8+getClient().getCurrentChannel().length()); // trim REQUEST:
             requestAllMessages=requestAllMessages.replace("\\n","\n");
             messageDispArea.setText(requestAllMessages);
         }
@@ -67,7 +64,6 @@ public class MessageController extends GeneralController {
      */
     @FXML
     private void setBackToMenu(ActionEvent event){
-        onMessages = false;
         MenuController.setClient(getClient());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
         try{
@@ -83,21 +79,5 @@ public class MessageController extends GeneralController {
      */
     private void addMessages(String message){
         messageDispArea.appendText(message+"\n");
-    }
-
-    @FXML
-    private void listen(MouseEvent mouseEntered){
-        getClient().execute(new listeningThread());
-    }
-    private class listeningThread implements Runnable{
-        @Override
-        public void run() {
-            while(onMessages){
-                String text = getClient().receiveMessage();
-                if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
-                    addMessages(text);
-                }
-            }
-        }
     }
 }
