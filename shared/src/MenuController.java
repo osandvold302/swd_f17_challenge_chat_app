@@ -31,6 +31,7 @@ public class MenuController extends GeneralController {
                 public void handle(ActionEvent event) {
                     String channelName = ((Button) event.getSource()).getText();
                     getClient().changeChannel(channelName);
+                    MessageController.setClient(getClient());
 
                     // change view
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
