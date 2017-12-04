@@ -47,16 +47,16 @@ public class NewChannelController extends GeneralController {
         System.out.println(user.toString()+" before");
         user.newChannel(channel,getListOfNames(usernameField.getText()));
         System.out.println(user.toString()+" after");
-        boolean determined = false;
-        while(!determined){
-            String message = getClient().receiveMessage();
+        boolean determined = false; // determine if we have gotten an existing channel
+        while(!determined){ // we don't know if channel exists
+            String message = getClient().receiveMessage();  // wait for output.flush message
             System.out.println(message);
             if(message.equals("Channel already exists!")){
                 channelNameField.setStyle("-fx-text-inner-color: red;");
                 channelNameField.setText("This channel already exists :(");
                 determined = true;
             }
-            if(!message.isEmpty()&&message.substring(0,11).equals("NEWCHANNEL:")){
+            if(!message.isEmpty() && message.substring(0,11).equals("NEWCHANNEL:")){
                 getClient().changeChannel(channel);
                 determined = true;
                 MessageController.setClient(getClient());
@@ -67,7 +67,6 @@ public class NewChannelController extends GeneralController {
                 }catch(IOException err){
                     err.printStackTrace();
                 }
-
             }
         }
     }
