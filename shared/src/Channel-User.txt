@@ -1,6 +1,0 @@
-swd,olivia,anjela,chris
-<<<<<<< HEAD
-poop,olivia,harsh,chris
-=======
-poop,olivia,chris
->>>>>>> 6958bff92abaf4fa504997b398cd78356f166212

@@ -27,7 +27,9 @@ public class StartUpController extends GeneralController {
     @FXML
     private Label errorLabel;
 
-    /** this function will validate whether the username is in the database or not*/
+    /** this function will validate whether the username is in the database or not
+     * @param login the user wants to login
+     */
     @FXML
     private void validUserName(ActionEvent login){
         username = userIDField.getText();
@@ -74,6 +76,7 @@ public class StartUpController extends GeneralController {
 
     /** this function will return whether the username entered is valid
      * the username MUST NOT CONTAIN ANY COMMAS OR SPACES
+     * @param username what name the user is aligned with
      * @return true if valid, false if not
      */
     public boolean isValidUser(String username) {

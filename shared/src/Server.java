@@ -123,7 +123,7 @@ public class Server extends JFrame {
 
         /**
          * Waits for a connection to be made and sets up the new socket pair
-         * @throws IOException
+         * @throws IOException if the connection is interrupted
          */
         private void waitForConnection() throws IOException {
             connection = server.accept();
@@ -132,7 +132,7 @@ public class Server extends JFrame {
         /**
          * Listens for output from the user connected to this socket.
          * Dispatches messages dependent on the message received.
-         * @throws IOException
+         * @throws IOException if the connection fails
          */
         private void processConnection() throws IOException {
             boolean done = false;
@@ -357,7 +357,7 @@ public class Server extends JFrame {
          * Writes the contents of a file to an ArrayList line by line
          * @param fileName name of the file to be read
          * @return An ArrayList of the file contents.
-         * @throws IOException
+         * @throws IOException if the file cannot be opened
          */
         private ArrayList<String> fileToArray(String fileName){
             ArrayList<String> entries = new ArrayList<>();
