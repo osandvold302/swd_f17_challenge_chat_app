@@ -51,7 +51,7 @@ public class MessageController extends GeneralController {
                 addMessages(text);
             }
         }*/
-        messageDispArea.setText("Fuck");
+        messageDispArea.setText("Fuck\n");
         channelNameLabel.setText(getClient().getCurrentChannel());
     }
 
@@ -61,8 +61,9 @@ public class MessageController extends GeneralController {
     @FXML
     private void messageListenerButton(ActionEvent event){
         String message = textFieldMessages.getText();
+        message = message.trim();
 
-        getClient().sendMessage(getClient().getID() + " >> " +message+"\n");
+        getClient().sendMessage(message+"\\n");
         addMessages(message);
 
         textFieldMessages.setText("");

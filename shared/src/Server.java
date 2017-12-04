@@ -103,7 +103,7 @@ public class Server extends JFrame {
                     displayMessage("New User connected with ID: "+ID+"\n");
                     outputs.put(ID,this);
                     displayMessage("User added to map\n");
-                    output.writeObject(getListFromFile("User-Channel.csv",ID));
+                    output.writeObject(getListFromFile("User-Channel.txt",ID));
                     output.flush();
                     displayMessage("Channel list sent.\n");
                     processConnection();
@@ -154,7 +154,7 @@ public class Server extends JFrame {
                             done = true;
                         }else {
                             addMessage(channel, user, text);
-                            String[] users = getListFromFile("User-Channel.csv",channel);
+                            String[] users = getListFromFile("User-Channel.txt",channel);
                             for (String eachUser : users) {
                                 SockServer serverOut = outputs.get(eachUser);
                                 if (serverOut!=null && serverOut != this) {
@@ -169,6 +169,9 @@ public class Server extends JFrame {
                         System.out.println("got new channel message");
                         String channel = message.getChannel();
                         String[] users = ((NewChannelMessage) message).getUsers();
+                        System.out.println("Channel is " +channel);
+                        boolean channelExist = channelExists(channel);
+                        System.out.println("The channel exists "+channelExist);
                         if(!channelExists(channel)){
                             addChannel(channel, users);
                             for (String eachUser : users) {
@@ -200,7 +203,7 @@ public class Server extends JFrame {
          */
         private void addChannel(String channel, String[] users){
             try {//Write to the end of the file a new line containing the name of the channel and all of the users
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-User.csv", true));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-User.txt", true));
                 StringBuilder builder = new StringBuilder();
                 builder.append(channel);
                 for(int i=0; i<users.length; i++){
@@ -222,20 +225,20 @@ public class Server extends JFrame {
          */
         private void addMessage(String channel, String user, String message){
             try {//Read each line and store it
-                ArrayList<String> entries = fileToArray("Channel-Log.csv");
+                ArrayList<String> entries = fileToArray("Channel-Log.txt");
                 boolean done = false;
                 for(int i=0; i<entries.size(); i++) {//If the line is that of the channel, append the message
                     Scanner lineReader = new Scanner(entries.get(i));
                     lineReader.useDelimiter(",");
                     if(lineReader.next().equals(channel)){
-                        entries.set(i,entries.get(i)+user+" >> "+message+",");
+                        entries.set(i,entries.get(i)+user+" >> "+message);
                         done = true;
                     }
                 }
                 if(!done){
-                    entries.add(channel+",");
+                    entries.add(channel+","+user+" >> "+message);
                 }
-                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.txt"));
                 for(String e:entries){//Rewrite the file with the new message appended
                     writer.write(e+"\n");
                 }
@@ -252,7 +255,7 @@ public class Server extends JFrame {
          */
         private String getConversationHistory(String channel){
             StringBuilder builder = new StringBuilder();
-                ArrayList<String> entries = fileToArray("Channel-Log.csv");
+                ArrayList<String> entries = fileToArray("Channel-Log.txt");
                 for(String e: entries) {//For each line, check if the channel is on the specified line.
                     Scanner lineReader = new Scanner(e);
                     lineReader.useDelimiter(",");
@@ -274,7 +277,7 @@ public class Server extends JFrame {
          */
         private void addChannelToUser(String user, String channel){
             try {//Read each line and store it
-                ArrayList<String> entries = fileToArray("User-Channel.csv");
+                ArrayList<String> entries = fileToArray("User-Channel.txt");
                 boolean done = false;
                 for(int i=0; i<entries.size(); i++) {//If the line is that of the channel, append the message
                     Scanner lineReader = new Scanner(entries.get(i));
@@ -287,7 +290,7 @@ public class Server extends JFrame {
                 if(!done){
                     entries.add(user+","+channel+",");
                 }
-                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\Channel-Log.csv"));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(".\\shared\\src\\User-Channel.txt"));
                 for(String e:entries){//Rewrite the file with the new message appended
                     writer.write(e+"\n");
                 }
@@ -303,11 +306,14 @@ public class Server extends JFrame {
          * @return true if channel already exists and false if it doesn't
          */
         private boolean channelExists(String channel){
-                ArrayList<String> entries = fileToArray("Channel-User.csv");
+                ArrayList<String> entries = fileToArray("Channel-User.txt");
                 for(String e: entries) {//In each line, if the first entry is equal to the current channel, return true
                     Scanner lineReader = new Scanner(e);
                     lineReader.useDelimiter(",");
-                    if(lineReader.next().equals(channel)){
+                    String channelNames = lineReader.next().toString().trim();
+                    System.out.println(channelNames);
+                    System.out.println(channel.compareTo(channelNames));
+                    if(channel.equals(channelNames)){
                         return true;
                     }
                 }
