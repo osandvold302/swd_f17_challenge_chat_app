@@ -22,6 +22,9 @@ public class MessageController extends GeneralController {
     /** button to bring back to menu*/
     @FXML
     private Button backToMenu;
+    /** the name of the channel*/
+    @FXML
+    private static Label channelNameLabel;
 
     /** static function will set all the messages from the past conversations   */
     public static void initMessages(){
@@ -38,6 +41,8 @@ public class MessageController extends GeneralController {
         while(splitter.hasNext()){
             messageDispArea.getChildren().add(new Label(splitter.nextLine()));
         }
+
+        channelNameLabel.setText(getClient().getCurrentChannel());
     }
 
     /** this function will send the message the user types after they press enter to the server
