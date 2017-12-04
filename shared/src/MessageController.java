@@ -29,7 +29,10 @@ public class MessageController extends GeneralController {
     /** static function will set all the messages from the past conversations   */
     @FXML
     public void initialize(){
-        /*getClient().requestMessageHistory(getClient().getCurrentChannel());
+        messageDispArea.setText(" ");
+        channelNameLabel.setText(getClient().getCurrentChannel());
+
+        getClient().requestMessageHistory(getClient().getCurrentChannel());
 
         // client would listen for all of the messages to come to the screen
         String requestAllMessages = getClient().receiveMessage();
@@ -38,21 +41,16 @@ public class MessageController extends GeneralController {
         }
         requestAllMessages = requestAllMessages.substring(8); // trim REQUEST:
 
-        Scanner splitter = new Scanner(requestAllMessages);
-        while(splitter.hasNext()){
-            messageDispArea.appendText(splitter.nextLine());
-        }
-
         channelNameLabel.setText(getClient().getCurrentChannel());
+
+        messageDispArea.setText(requestAllMessages);
 
         while(onMessages){
             String text = getClient().receiveMessage();
             if(text!=null && !text.substring(0,11).equals("NEWCHANNEL:")){
                 addMessages(text);
             }
-        }*/
-        messageDispArea.setText("Fuck\n");
-        channelNameLabel.setText(getClient().getCurrentChannel());
+        }
     }
 
     /** this function will send the message when the user presses the send button or presses enter
@@ -64,7 +62,7 @@ public class MessageController extends GeneralController {
         message = message.trim();
 
         getClient().sendMessage(message+"\\n");
-        addMessages(message);
+        addMessages(getClient().getID()+" >> "+message);
 
         textFieldMessages.setText("");
     }
@@ -75,6 +73,7 @@ public class MessageController extends GeneralController {
     @FXML
     private void setBackToMenu(ActionEvent event){
         onMessages = false;
+        MenuController.setClient(getClient());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menuView.fxml"));
         try{
             Parent root = (Parent)loader.load();
@@ -88,7 +87,7 @@ public class MessageController extends GeneralController {
      * @param message to send
      */
     private void addMessages(String message){
-        messageDispArea.appendText(getClient().getID()+" >> "+message+"\n");
+        messageDispArea.appendText(message+"\n");
     }
 
 }
