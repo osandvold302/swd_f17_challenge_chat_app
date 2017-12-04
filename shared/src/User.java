@@ -50,22 +50,19 @@ public class User {
 
     /** send a message from the current channel
      * @param message what the user is trying to send
-     * @return whether they were able to send the message (true if sent, false if not)
      */
-    public boolean sendMessage(String message){
+    public void sendMessage(String message){
         try {
             output.writeObject(new TextMessage(currentChannel,ID,message));
             output.flush();
-            return true;
         }catch(IOException e){
-            return false;
+            // cannot send message
         }
     }
 
     /** Send a message to create a new channel with the list of users specified
      * @param channel what they want to create
      * @param users who they want to add
-     * @return whether they were successful in adding a channel
      */
     public void newChannel(String channel,String[] users){
         System.out.println("entering new channel request");
