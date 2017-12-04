@@ -1,6 +1,6 @@
 /**
- * Class contains the message and the channel the
- * message is sent to
+ * Class contains a message that is sent to the
+ * client using a specific channel
  */
 public class MessageToClient extends Message
 {
@@ -27,7 +27,7 @@ public class MessageToClient extends Message
 
     /**
      * Getter for channel
-     * @return channel name as string
+     * @return channel message is being sent to
      */
     public String getChannel() {
         return channel;
