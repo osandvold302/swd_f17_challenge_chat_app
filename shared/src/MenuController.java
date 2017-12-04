@@ -19,7 +19,7 @@ public class MenuController extends GeneralController {
     /** this reference is to the channels the user is in*/
     private ArrayList<String> channels;
 
-    /** called when FXMLLoader loads*/
+    /** called when FXMLLoader loads   */
     @FXML
     public void initialize(){
         // get the channels for the user
@@ -66,7 +66,4 @@ public class MenuController extends GeneralController {
             err.printStackTrace();
         }
     }
-
-
-
 }
