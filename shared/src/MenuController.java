@@ -44,26 +44,8 @@ public class MenuController extends GeneralController {
                     }
                 }
             });
-            channelDisp.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    String channelName = ((Button) event.getSource()).getText();
-                    getClient().changeChannel(channelName);
-                    MessageController.setClient(getClient());
-
-                    // change view
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("messagesView.fxml"));
-                    // once in messageView, request information
-                    try{
-                        Parent root = (Parent)loader.load();
-                        getStage().setScene(new Scene(root));
-                    }catch(IOException err){
-                        err.printStackTrace();
-                    }
-                }
-            });
             // add buttons to the VBox
-            messageDispArea.getChildren().add(new Button(channel));
+            messageDispArea.getChildren().add(channelDisp);
         }
     }
 

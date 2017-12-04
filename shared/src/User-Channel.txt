@@ -1,4 +1,0 @@
-a,poop,crap,asscheek,
-b,poop,crap,turd,asscheek,
-c,poop,turd,asscheek,
-chris,poop,crap,turd,asscheek,

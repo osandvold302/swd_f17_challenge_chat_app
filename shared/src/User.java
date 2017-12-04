@@ -55,6 +55,15 @@ public class User {
         this.ID = ID;   // set ID
     }
 
+    public void runUser(){
+
+    }
+
+    private class UserListener implements Runnable{
+        public void run(){
+
+        }
+    }
     /** send a message from the current channel
      * @param message what the user is trying to send
      */
@@ -125,6 +134,9 @@ public class User {
             if(message instanceof RequestFulfillment){  // request was successful
                 String channel = ((RequestFulfillment) message).getChannel();
                 if(channelExists(channel)){
+                    if(((RequestFulfillment) message).getText()==null){
+                        return "REQUEST:";
+                    }
                     return "REQUEST:"+((RequestFulfillment)message).getText();
                 } else{
                     channels.add(channel); // add channels to their list

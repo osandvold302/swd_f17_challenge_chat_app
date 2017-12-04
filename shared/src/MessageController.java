@@ -32,25 +32,22 @@ public class MessageController extends GeneralController {
         messageDispArea.setText(" ");
         channelNameLabel.setText(getClient().getCurrentChannel());
 
-        getClient().requestMessageHistory(getClient().getCurrentChannel());
-
         // client would listen for all of the messages to come to the screen
         String requestAllMessages = getClient().receiveMessage();
         while(!requestAllMessages.substring(0,8).equals("REQUEST:")){
             requestAllMessages = getClient().receiveMessage();
         }
-        requestAllMessages = requestAllMessages.substring(8); // trim REQUEST:
-
-        channelNameLabel.setText(getClient().getCurrentChannel());
-
-        messageDispArea.setText(requestAllMessages);
-
-        while(onMessages){
-            String text = getClient().receiveMessage();
-            if(text!=null && !text.substring(0,11).equals("NEWCHANNEL:")){
-                addMessages(text);
-            }
+        if(requestAllMessages.length()>8){
+            requestAllMessages = requestAllMessages.substring(8); // trim REQUEST:
+            requestAllMessages=requestAllMessages.replace("\\n","\n");
+            messageDispArea.setText(requestAllMessages);
         }
+//        while(onMessages){
+//            String text = getClient().receiveMessage();
+//            if(text!=null && text.length()>11 && !text.substring(0,11).equals("NEWCHANNEL:")){
+//                addMessages(text);
+//            }
+//        }
     }
 
     /** this function will send the message when the user presses the send button or presses enter
